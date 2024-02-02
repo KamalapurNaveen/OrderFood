@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">QR Code Scanner</h2>
+            
+        </div>
+        <div class="card-body text-center">
+            <button id="scanButton" class="btn btn-primary">Scan QR Code</button>
+            <div id="scannerContainer" style="display: none;">
+                <video id="scanner" width="240"></video>
+            </div>
+            <div id="scanResult" class="mt-3"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let scanner = new Instascan.Scanner({ video: document.getElementById('scanner') });
+
+        $('#scanButton').click(function () {
+            // Start scanning when the button is clicked
+            scanner.start();
+            $('#scanButton').hide();
+            $('#scannerContainer').show();
+        });
+
+        scanner.addListener('scan', function (content) {
+            // Stop the video
+            scanner.stop();
+
+            // Display the scanned content
+            displayScannedContent(content);
+
+            // Show the button and hide the scanner container after a delay
+            setTimeout(function() {
+                $('#scanButton').show();
+                $('#scannerContainer').hide();
+            }, 10); // 1000 milliseconds (1 second) delay
+        });
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                // Use the first available camera
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+
+        function displayScannedContent(content) {
+    // Display the scanned content as key-value pairs
+    let resultDiv = document.getElementById('scanResult');
+    
+    // Split content into key-value pairs using newline as a separator
+    let keyValuePairs = content.split('\n');
+
+    // Create HTML for each key-value pair
+    let rowsHTML = keyValuePairs.map(pair => {
+        // Split each key-value pair using ":" as a separator
+        let [key, value] = pair.split(':');
+
+        // Return formatted HTML for each pair
+        return `<div class="alert alert-success" role="alert">
+                    <strong>${key}:</strong> ${value}
+                </div>`;
+    }).join('');
+
+    // Set the resultDiv innerHTML to the generated HTML
+    resultDiv.innerHTML = rowsHTML;
+}
+
+    });
+</script>
+
+</body>
+</html>
