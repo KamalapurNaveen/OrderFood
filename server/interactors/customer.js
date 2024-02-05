@@ -26,7 +26,7 @@ async function loginCustomer({ email, password, auth, CustomerModel }){
         } else {
             const token = await auth.createJWT({id : user._id, email, wallet_id : user.wallet_id, type : "customer" })
             return function setCookie(res){
-                res.cookie("access_token", token)
+                res.cookie("access_token", token, { sameSite: 'None', secure: true, httpOnly: true })
             }
         }
     }

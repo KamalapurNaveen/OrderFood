@@ -21,7 +21,7 @@ const Home = () => {
           </div>
           <div>
             <Link
-              to="/canteener/login"
+              to="/employee/signin"
               className="btn btn-secondary btn-lg btn-block"
             >
               Access Admin Dashboard
