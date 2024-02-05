@@ -1,8 +1,10 @@
-const { EmployeeModel } = require("../models")
+const { EmployeeModel, ItemModel, OrderModel } = require("../models")
 const auth = require("../services/auth.service")
 const employeeInteractor  = require("../interactors/employee")
+const itemInteractor = require("../interactors/item")
+const orderInteractor = require("../interactors/order")
 
-async function employeeSignup(req, res){
+async function signup(req, res){
     console.log(req.body)
     const { name, email, mobile, password } = req.body;
     try {
@@ -13,7 +15,7 @@ async function employeeSignup(req, res){
     }
 }   
 
-async function employeeLogin(req, res){
+async function login(req, res){
     const { email, password } = req.body;
     try {
         const setCookie = await employeeInteractor.loginEmployee({ email, password, auth, EmployeeModel })
@@ -24,14 +26,90 @@ async function employeeLogin(req, res){
     }    
 }   
 
-async function employeeLogout(_, res){
+async function logout(_, res){
     try {
         const clearCookie = await employeeInteractor.logoutEmployee();
         clearCookie(res)
-        res.send(200).send({success : true, message : "Done"})
+        res.status(200).send({success : true, message : "Done"})
     } catch (err){
-        res.send(500).send({success : true, message : err.message})
+        res.status(500).send({success : false, message : err.message})
     }
 }
 
-module.exports = {employeeSignup, employeeLogin, employeeLogout}
+async function getAllItems(req,res){
+    try{
+        const items = await itemInteractor.getAllItems({ItemModel})
+        res.status(200).send({success : true, data : {items}})
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function addItems(req, res){
+    try{
+        const items = req.body.items
+        await itemInteractor.addItem({items, ItemModel})
+        res.status(200).send({success : true, message : "Added Items"})
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function deleteItem(req,res){
+    try{
+        const itemId = req.query.id
+        await itemInteractor.deleteItem({itemId, ItemModel})
+        res.status(200).send({success : true, message : "Deleted Item"})
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function getOrderInfo(req,res){
+    try{
+        const orderId = req.query.id
+        const order = await orderInteractor.getOrderInfo({orderId, OrderModel})
+        res.status(200).send({success : true, data : { order } })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+async function updateOrderInfo(req,res){
+    try {
+        const orderInfo = req.body.order
+        const updatedOrderInfo = await orderInteractor.updateOrderInfo({orderInfo, OrderModel})
+        res.status(200).send({success : true, data : { order : updatedOrderInfo } })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function getOrderHistory(req,res){
+    try {
+        const orders = await orderInteractor.getOrderHistory({OrderModel})
+        res.status(200).send({success : true, data : { orders } })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+async function getOrderQueue(req,res){
+    try {
+        const orders = await orderInteractor.getOrderQueue({OrderModel})
+        res.status(200).send({success : true, data : { orders } })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+module.exports = {
+    signup, 
+    login, 
+    logout,
+    addItems,
+    getAllItems,
+    deleteItem,
+    getOrderInfo,
+    updateOrderInfo,
+    getOrderHistory,
+    getOrderQueue,
+}

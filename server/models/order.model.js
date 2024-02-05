@@ -14,6 +14,11 @@ const OrderItemSchema = new Schema({
 
 const OrderSchema = new Schema({
     items: [OrderItemSchema],
+    status: {
+        type: String,
+        enum: ['pending', 'delivered'],
+        default: 'pending'
+    },
     cost: Number,
     time: {
         type: Date,
