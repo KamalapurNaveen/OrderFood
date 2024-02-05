@@ -3,13 +3,16 @@ const auth = require("../services/auth.service")
 const customerInteractor  = require("../interactors/customer")
 
 async function customerSignup(req, res){
-    console.log(req.body)
     const { name, email, mobile, password } = req.body;
     try {
         await customerInteractor.registerCustomer({ name, email, mobile, password, auth, CustomerModel, WalletModel })
         res.status(201).send({success : true, message : "Created"})
     } catch(err) {
-        res.status(500).send({success : false, message : err.message})
+        var statusCode = 500
+        if (err.message === 'invalid email' || err.message === 'invalid password') {
+            statusCode =  401
+        }
+        res.status(statusCode).send({success : false, message : err.message})
     }
 }   
 
@@ -20,7 +23,11 @@ async function customerLogin(req, res){
         setCookie(res)
         res.status(200).send({success : true, message : "Authorized"})
     } catch(err) {
-        res.status(500).send({success : false, message : err.message})
+        var statusCode = 500
+        if (err.message === 'invalid email' || err.message === 'invalid password') {
+            statusCode =  401
+        }
+        res.status(statusCode).send({success : false, message : err.message})
     }    
 }   
 

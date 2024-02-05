@@ -25,7 +25,7 @@ async function loginEmployee({ email, password, auth, EmployeeModel }){
         } else {
             const token = await auth.createJWT({id : user._id, email, type : "employee" })
             return function setCookie(res){
-                res.cookie("access_token", token)
+                res.cookie("access_token", token, { sameSite: 'None', secure: true, httpOnly: true })
             }
         }
     }

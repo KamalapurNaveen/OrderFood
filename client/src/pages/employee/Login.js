@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      var response = await fetch("http://127.0.0.1:3500/api/_c/auth/login", {
+      var response = await fetch("http://127.0.0.1:3500/api/_e/auth/login", {
         method : "post",
         body : JSON.stringify({
           email : values.email,

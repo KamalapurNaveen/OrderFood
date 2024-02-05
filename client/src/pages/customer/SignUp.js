@@ -1,10 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
-  const onFinish = (values) => {
+const Signup =  () => {
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
     console.log('Received values:', values);
+    try {
+      var response = await fetch("http://127.0.0.1:3500/api/_c/auth/signup", {
+        method : "post",
+        body : JSON.stringify({
+          name : values.fullName,
+          email : values.email,
+          mobile : values.mobileNumber,
+          password : values.password,
+        }),
+        headers :{
+          "Content-Type" : "application/json"
+        },
+        credentials: 'include',
+      }) 
+      var data = await response.json()
+      console.log(data)
+      if(data.success) {
+        navigate("/customer/signin")
+      }
+    } catch(err) {
+      console.log(err)
+    }
   };
 
   return (
