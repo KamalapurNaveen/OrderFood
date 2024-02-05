@@ -20,7 +20,10 @@ var WalletSchema = new Schema({
         type: Number,
         default: 0
     },
-    transactions : [transactionSchema],
+    transactions : {
+        type : [transactionSchema],
+        default: []
+    },
 });
 
 module.exports = mongoose.model("Wallet", WalletSchema);
