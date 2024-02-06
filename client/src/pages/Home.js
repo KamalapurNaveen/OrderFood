@@ -24,7 +24,7 @@ const Home = () => {
               to="/employee/signin"
               className="btn btn-secondary btn-lg btn-block"
             >
-              Access Admin Dashboard
+               Explore as Employee
             </Link>
           </div>
           <p className="mt-4 text-muted">
