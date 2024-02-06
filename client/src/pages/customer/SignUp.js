@@ -58,13 +58,14 @@ const Signup =  () => {
                   Create Account
                 </Button>
               </Form.Item>
-            </Form>
-            <p className="mt-3">
+              <p className="mt-3 text-center">
               Already have an account?{' '}
               <Link to="/customer/signin" className="text-primary">
                 Login here
               </Link>
             </p>
+            </Form>
+            
           </div>
         </div>
       </div>
