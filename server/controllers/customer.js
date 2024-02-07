@@ -1,6 +1,9 @@
-const {CustomerModel, WalletModel} = require("../models")
+const {CustomerModel, ItemModel, OrderModel, WalletModel} = require("../models")
 const auth = require("../services/auth.service")
-const customerInteractor  = require("../interactors/customer")
+
+const customerInteractor = require("../interactors/customer")
+const itemInteractor  = require("../interactors/item")
+const orderIntractor  = require("../interactors/order")
 
 async function customerSignup(req, res){
     const { name, email, mobile, password } = req.body;
@@ -41,4 +44,62 @@ async function customerLogout(_, res){
     }    
 }
 
-module.exports = {customerSignup, customerLogin, customerLogout}
+async function getAllItems(req,res){
+    try{
+        const items = await itemInteractor.getAllItems({ItemModel})
+        res.status(200).send({success : true, data : {items}})
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function addOrder(req,res){
+    try {
+        const order = req.body.order
+        // const { walletId, userName } = req.sessionData
+        // const userId = req.sessionData.id
+
+        const walletId = '65c08db4504d89f35a81aea1'
+        const userId="892192891" 
+        const userName="TempUser"
+        const walletStatus = await orderIntractor.addCustomerOrder({order, walletId,userId, userName,  OrderModel, WalletModel})
+        res.status(200).send({success : true, data: {walletStatus}})
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function cancelOrder(req, res){
+    try {
+        // const walletId = req.sessionData.wallet_id
+        const walletId = '65c08db4504d89f35a81aea1'
+        const orderId = req.query.orderId
+        
+        const response = await orderIntractor.cancelCustomerOrder({orderId, walletId, WalletModel, OrderModel})
+        res.status(200).send(response)
+    }catch(err){
+        console.log(err)
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+async function getHistory(req, res){
+    // const walletId = req.sessionData.wallet_id
+    const walletId = '65c08db4504d89f35a81aea1'
+    
+    try{
+        const history = await orderIntractor.getCustomerOrderHistory({walletId, WalletModel, OrderModel});
+        res.status(200).send({success : true, history })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+module.exports = {
+    customerSignup, 
+    customerLogin, 
+    customerLogout, 
+    getAllItems,
+    addOrder,
+    cancelOrder,
+    getHistory
+}

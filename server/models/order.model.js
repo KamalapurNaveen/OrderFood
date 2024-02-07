@@ -16,7 +16,7 @@ const OrderSchema = new Schema({
     items: [OrderItemSchema],
     status: {
         type: String,
-        enum: ['pending', 'delivered'],
+        enum: ['pending', 'delivered', 'cancelled'],
         default: 'pending'
     },
     cost: Number,
@@ -24,6 +24,8 @@ const OrderSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    userId : String,
+    userName : String,
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

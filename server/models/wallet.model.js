@@ -8,6 +8,7 @@ const transactionSchema = new mongoose.Schema({
         required: true
     },
     amount: Number,
+    message : String,
     orderId: {
         type : Schema.Types.ObjectId,
         red : 'Order',

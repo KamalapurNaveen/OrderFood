@@ -67,8 +67,8 @@ async function deleteItem(req,res){
 
 async function getOrderInfo(req,res){
     try{
-        const orderId = req.query.id
-        const order = await orderInteractor.getOrderInfo({orderId, OrderModel})
+        const id = req.query.id
+        const order = await orderInteractor.getOrderInfo({id, OrderModel})
         res.status(200).send({success : true, data : { order } })
     }catch(err){
         res.status(500).send({success : false, message : err.message})
