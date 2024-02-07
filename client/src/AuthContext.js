@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [userRole, setUserRole] = useState('employee');
+  const [userRole, setUserRole] = useState('customer');
 
   const login = (role) => {
     setIsAuthenticated(true);

@@ -14,20 +14,20 @@ import { ErrorPage } from './ErrorPage';
 function App() {
   return (
     <AuthProvider>
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/customer/signin" element={< CustomerLogin />} />
-          <Route path="/customer/signup" element={< CustomerSignup/>} />
-          <Route path="/employee/signin" element={< EmployeeLogin />} />
-          <Route path="/customer/dashboard" element={<PrivateRoute Component={CustomerDashboard} role="customer" />} />
-          <Route path="/employee/dashboard" element={<PrivateRoute Component={EmployeeDashboard} role="employee" />} />
-          <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="*" element={<ErrorPage/>}/>
-        </Routes>
-      </div>
-    </Router>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/customer/signin" element={< CustomerLogin />} />
+            <Route path="/customer/signup" element={< CustomerSignup/>} />
+            <Route path="/employee/signin" element={< EmployeeLogin />} />
+            <Route path="/customer/dashboard" element={<PrivateRoute Component={CustomerDashboard} role="customer" />} />
+            <Route path="/employee/dashboard" element={<PrivateRoute Component={EmployeeDashboard} role="employee" />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="*" element={<ErrorPage/>}/>
+          </Routes>
+        </div>
+      </Router>
     </AuthProvider>
   );
 }
