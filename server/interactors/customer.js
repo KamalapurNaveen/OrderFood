@@ -24,7 +24,7 @@ async function loginCustomer({ email, password, auth, CustomerModel }){
         if(!valid) {
             throw new Error('invalid password')
         } else {
-            const token = await auth.createJWT({id : user._id, email, wallet_id : user.wallet_id, type : "customer" })
+            const token = await auth.createJWT({id : user._id,name : user.name, email, wallet_id : user.wallet_id, type : "customer" })
             return function setCookie(res){
                 res.cookie("access_token", token, { sameSite: 'None', secure: true, httpOnly: true })
             }
