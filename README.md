@@ -26,7 +26,7 @@ The Food Ordering Website for Employees is a web application designed to streaml
 
 ## Technologies Used
 
-- Frontend: HTML, CSS, JavaScript ,JQuery , Bootstrap
+- Frontend: ReactJs, Bootstrap, AntDesign
 - Backend: Node.js, Express.js, MongoDB 
 - QR Code Generation: QR Code Generator Library
 - Authentication: JWT (JSON Web Tokens)
