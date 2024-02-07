@@ -31,7 +31,7 @@ const contentList = {
   tab4: <div><AddItem/></div>
 };
 
-const ManageMenu = () => {
+const Menu = () => {
 
   const [activeTabKey1, setActiveTabKey1] = useState('tab1');
 
@@ -59,7 +59,7 @@ const ManageMenu = () => {
     </>
   );
 };
-export default ManageMenu;
+export default Menu;
 
 
 

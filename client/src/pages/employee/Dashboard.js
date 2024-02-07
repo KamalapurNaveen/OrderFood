@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import RecentOrders from './RecentOrders';
 import Scanner from './Scanner';
 import UpcomingOrders from './UpcomingOrders';
-import ManageMenu from './ManageMenu';
+import ManageMenu from './Menu';
 import Profile from './Profile';
+import Orders from './Orders';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('scanner');
@@ -12,9 +13,21 @@ const Dashboard = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  const [contentHeight, setContentHeight] = useState('100vh'); // Initial height set to 100vh
 
+  useEffect(() => {
+    const resizeListener = () => {
+      const windowHeight = window.innerHeight;
+      const containerHeight = document.getElementById('container').scrollHeight;
+      setContentHeight(containerHeight > windowHeight ? 'fit-content' : '100vh');
+    };
+
+    window.addEventListener('resize', resizeListener);
+    resizeListener(); // Call resize listener initially
+    return () => window.removeEventListener('resize', resizeListener);
+  }, []);
   return (
-    <div className='my-nav'>
+    <div className='my-nav' id="container" style={{ height: contentHeight, overflowY: 'auto' , backgroundColor: "rgba(195, 195, 195, 0.33)" } }>
       <Navbar bg="dark" variant="dark" expand="lg" className="justify-content-between">
         <Container>
           <Navbar.Brand>
@@ -32,9 +45,8 @@ const Dashboard = () => {
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav className="mr-auto">
               <Nav.Link href="#scanner" onClick={() => handleTabClick('scanner')} className={activeTab === 'scanner' ? 'active' : ''}>Scanner</Nav.Link>
-              <Nav.Link href="#manage-menu" onClick={() => handleTabClick('manage-menu')} className={activeTab === 'manage-menu' ? 'active' : ''}>Manage Menu</Nav.Link>
-              <Nav.Link href="#recent-orders" onClick={() => handleTabClick('recent-orders')} className={activeTab === 'recent-orders' ? 'active' : ''}>Recent Orders</Nav.Link>
-              <Nav.Link href="#upcoming-orders" onClick={() => handleTabClick('upcoming-orders')} className={activeTab === 'upcoming-orders' ? 'active' : ''}>Upcoming Orders</Nav.Link>
+              <Nav.Link href="#menu" onClick={() => handleTabClick('menu')} className={activeTab === 'menu' ? 'active' : ''}>Menu</Nav.Link>
+              <Nav.Link href="#orders" onClick={() => handleTabClick('orders')} className={activeTab === 'orders' ? 'active' : ''}>Orders</Nav.Link>
               <Nav.Link href="#profile" onClick={() => handleTabClick('profile')} className={activeTab === 'profile' ? 'active' : ''}>Profile</Nav.Link>
             </Nav>
           </Navbar.Collapse>
@@ -43,9 +55,8 @@ const Dashboard = () => {
 
       <Container className="mt-4">
         {activeTab === 'scanner' && <Scanner />}
-        {activeTab === 'manage-menu' && <ManageMenu />}
-        {activeTab === 'upcoming-orders' && <UpcomingOrders />}
-        {activeTab === 'recent-orders' && <RecentOrders />}
+        {activeTab === 'menu' && <ManageMenu />}
+        {activeTab === 'orders' && <Orders />}
         {activeTab === 'profile' && <Profile />}
         {/* Add similar content for other tabs */}
       </Container>
