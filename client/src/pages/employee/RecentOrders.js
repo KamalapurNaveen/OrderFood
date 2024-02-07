@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Row, Col, Avatar, Typography, Statistic, Divider } from 'antd';
-
+import { Card, Row, Col, Avatar, Typography, Statistic, Divider ,List} from 'antd';
+import './card.css'
+import DropdownItems from './DropdownItems';
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
@@ -50,7 +51,7 @@ const recentOrders = [
   {
     id: 1,
     name: 'John Doe',
-    item: 'Pizzaa',
+    item: 'Pizsaaa',
     price: '$100',
     count: 2,
   },
@@ -63,7 +64,10 @@ const recentOrders = [
   },
   // Add more recent orders as needed
 ];
-
+const getInitials = (name) => {
+  const nameArray = name.trim().split(' ');
+  return nameArray.reduce((acc, curr) => acc + curr.charAt(0).toUpperCase(), '');
+};
 const RecentOrders = () => {
   // Calculate total revenue
   const totalRevenue = recentOrders.reduce((acc, order) => acc + (parseInt(order.price.replace('$', '')) * order.count), 0);
@@ -100,11 +104,11 @@ const RecentOrders = () => {
           colorIndex++;
           return (
             <Col key={item} xs={12} sm={8} md={6} lg={4}>
-              <Card style={{ backgroundColor: itemColor }}>
+              <Card  className='card'>
                 <Statistic
-                  title={<Text style={{ color: '#4E4E4E' }}>{item}</Text>}
+                  title={<Text style={{ color: 'black', position:"relative",fontWeight:"10", fontSize:"17px"}}><strong>{item} </strong> <strong>{count}</strong></Text>}
                   value={count}
-                  valueStyle={{ fontSize: '24px', color: '#4E4E4E' }}
+                  valueStyle={{ fontSize: '20px', color: 'black'  ,fontWeight:"600"}}
                 />
               </Card>
             </Col>
@@ -112,25 +116,25 @@ const RecentOrders = () => {
         })}
       </Row>
       <Divider />
+      <Divider />
       <Title level={3} style={{ marginBottom: '20px', color: '#4E4E4E' }}>Recent Orders</Title>
       <Row gutter={[16, 16]}>
-        {recentOrders.map((order, index) => (
-          <Col key={order.id} xs={24} sm={12} md={8} lg={6}>
-            <Card style={{ backgroundColor:  '#F0F2F5'  }}>
-              <Meta
-                avatar={<Avatar style={{ backgroundColor: '#D1D1D1', color: '#4E4E4E' }}>{order.name[0]}</Avatar>}
-                title={<Text strong style={{ color: '#4E4E4E' }}>{order.name}</Text>}
-                description={
-                  <div>
-                    <p><Text strong>Item:</Text> {order.item}</p>
-                    <p><Text strong>Price:</Text> {order.price}</p>
-                    <p><Text strong>Count:</Text> {order.count}</p>
-                  </div>
-                }
-              />
-            </Card>
-          </Col>
-        ))}
+      <List 
+            style={{ margin: 2, padding: 5, paddingLeft: 10, backgroundColor: "white", borderRadius: 5 , width:"90%" }}
+            dataSource={recentOrders}
+            renderItem={(item) => (
+                <List.Item
+                    style={{ borderRadius: 10 }}
+                >
+                    <List.Item.Meta
+                        avatar={<Avatar size={50}>{getInitials('Naveen')}</Avatar>}
+                        title={<span style={{ fontWeight: 'bold'  , alignSelf:'center'}}>Naveen </span>}
+                        description={<span style={{ fontWeight: 'bold' }}>OrderId: 3</span>}
+                    />
+                    <DropdownItems/>
+                </List.Item>
+            )}
+        />
       </Row>
       <Divider />
     </div>
