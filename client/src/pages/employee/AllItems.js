@@ -20,7 +20,7 @@ const AllItems = () => {
   return (
     <div className="container-fluid align-items-center" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
       {items.map((item) => (
-        <CardItem
+        <CardItem 
           key={item.id}
           title={item.title}
           price={item.cost}

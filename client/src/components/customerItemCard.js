@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Card, Button, Avatar } from 'antd';
-
+import "../pages/employee/CardItem.css"
 const { Meta } = Card;
 
 const CustomerItemCard = ({ item, updateCartItems, prevQuantity }) => {

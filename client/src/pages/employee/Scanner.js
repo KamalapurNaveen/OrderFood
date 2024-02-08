@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QrReader from 'react-qr-scanner';
-import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
+import { Row, Col, Modal, Button } from 'antd';
 
 const Scanner = () => {
   const [result, setResult] = useState('');
   const [orderData, setOrderData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [permissionGranted, setPermissionGranted] = useState(false);
+  const [scannerVisible, setScannerVisible] = useState(true); // Track visibility of scanner
   const scannerRef = useRef(null);
 
   useEffect(() => {
@@ -45,12 +46,18 @@ const Scanner = () => {
       // Fetch order data using orderId
       // For demonstration, use dummy order data
       const dummyOrderData = {
-        orderId: '123456',
+        orderId: {orderId},
         customerName: 'John Doe',
         // Add more order details as needed
       };
-      setOrderData(dummyOrderData);
+      setOrderData(orderId);
       setShowModal(true);
+      // Pause scanning when modal is displayed
+      if (scannerRef.current) {
+        scannerRef.current.pauseScan();
+      }
+      // Hide the scanner
+      setScannerVisible(false);
     } catch (error) {
       console.error('Error fetching order data:', error);
     }
@@ -58,43 +65,51 @@ const Scanner = () => {
 
   const handleModalClose = () => {
     setShowModal(false);
+    // Resume scanning when modal is closed
+    if (scannerRef.current) {
+      scannerRef.current.resumeScan();
+    }
+    // Show the scanner
+    setScannerVisible(true);
   };
 
   return (
-    <Container fluid>
-      <Row className="justify-content-center mt-4">
-        <Col xs={12} md={6} lg={4}>
-          {permissionGranted && (
+    <>
+      <Row justify="center" align="middle" className="mt-4" style={{ height: 'calc(100vh - 64px)' }}>
+        <Col xs={24} md={12} lg={8}>
+          {permissionGranted && scannerVisible && ( // Only render scanner if it's visible
             <QrReader
               ref={scannerRef}
               delay={300}
               onError={handleError}
               onScan={handleScan}
-              style={{ width: '100%' }}
+              style={{ width: '100%', maxHeight: '70vh' }} // Adjust size of the scanner
             />
           )}
         </Col>
       </Row>
 
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Order Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Order ID: {orderData?.orderId}</p>
-          <p>Customer Name: {orderData?.customerName}</p>
-          {/* Add more order details as needed */}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
+      <Modal
+        title="Order Details"
+        visible={showModal}
+        onCancel={handleModalClose}
+        footer={[
+          <Button key="cancel" onClick={handleModalClose}>
             Cancel
-          </Button>
-          <Button variant="primary" onClick={handleModalClose}>
+          </Button>,
+          <Button key="delivered" type="primary" onClick={handleModalClose}>
             Delivered
-          </Button>
-        </Modal.Footer>
+          </Button>,
+        ]}
+        centered
+        maskClosable={false}
+        closable={false}
+      >
+        <p>Order ID: {orderData}</p>
+        
+        {/* Add more order details as needed */}
       </Modal>
-    </Container>
+    </>
   );
 };
 
