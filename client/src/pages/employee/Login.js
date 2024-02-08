@@ -9,19 +9,15 @@ const Login = () => {
   const {login} =useAuth();
   const onFinish = async (values) => {
     try {
-      var response = await fetch("http://127.0.0.1:3500/api/_e/auth/login", {
-        method : "post",
-        body : JSON.stringify({
-          email : values.email,
-          password : values.password,
-        }),
-        headers :{
-          "Content-Type" : "application/json"
+      var response = await fetch("http://localhost:3500/api/_e/auth/login", {
+        method: "post",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json"
         },
-        credentials: 'include',
-      }) 
+        credentials: "include"
+      })
       var data = await response.json()
-      console.log(data)
       if(data.success) {
         login('employee')
         navigate("/employee/dashboard")
