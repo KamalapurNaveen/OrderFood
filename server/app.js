@@ -19,9 +19,9 @@ const corsOptions = {
     optionsSuccessStatus: 204,
 };  
 
-app.use(bodyParser.json())
-app.use(cors(corsOptions));  
 app.use(cookieParser())
+app.use(cors(corsOptions));  
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api", apiRoute)
 

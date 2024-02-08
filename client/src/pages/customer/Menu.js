@@ -8,7 +8,10 @@ const Menu = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await fetch("http://localhost:3500/api/_c/item",{ credentials: 'include' });
+                const response = await fetch("http://localhost:3500/api/_c/item",{ 
+                    credentials: 'include',
+                    
+                });
                 const resData = await response.json();
                 setItems(resData.data.items);
             } catch (error) {
