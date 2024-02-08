@@ -1,33 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CardItem from './CardItem';
-
+import { useState } from 'react';
 const AllItems = () => {
-  // Array of objects representing data for each card
-  const items = [
-    { id: 1, title: 'Item 1', price: '$10', description: 'Description 1', available: true },
-    { id: 2, title: 'Item 2', price: '$15', description: 'Description 2', available: false },
-    { id: 3, title: 'Item 3', price: '$20', description: 'Description 3', available: true },
-    // Add more items as needed
-    { id: 1, title: 'Item 1', price: '$10', description: 'Description 1', available: true },
-    { id: 2, title: 'Item 2', price: '$15', description: 'Description 2', available: false },
-    { id: 3, title: 'Item 3', price: '$20', description: 'Description 3', available: true },
-   
-    { id: 1, title: 'Item 1', price: '$10', description: 'Description 1', available: true },
-    { id: 2, title: 'Item 2', price: '$15', description: 'Description 2', available: false },
-    { id: 3, title: 'Item 3', price: '$20', description: 'Description 3', available: true },
-   
-    
-  ];
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const fetchItems = async () => {
+        try {
+            const response = await fetch("http://localhost:3500/api/_e/item");
+            const resData = await response.json();
+            setItems(resData.data.items);
+        } catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    };
 
+    fetchItems();
+  }, []);
+  
   return (
     <div className="container-fluid align-items-center" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
       {items.map((item) => (
         <CardItem
           key={item.id}
           title={item.title}
-          price={item.price}
+          price={item.cost}
           description={item.description}
-          available={item.available}
+          available={item.is_available}
+          image={item.image}
+          max_limit={item.max_limit}
           showButtons={true}
         />
       ))}

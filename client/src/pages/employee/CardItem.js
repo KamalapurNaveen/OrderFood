@@ -4,13 +4,13 @@ import { DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
-const CardItem = ({ title, price, description, available, onDelete, showButtons }) => (
+const CardItem = ({ title, price, description, available,image,max_limit, onDelete, showButtons }) => (
   <Card
     style={{}}
     cover={
       <img
         alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src={image}
       />
     }
     actions={

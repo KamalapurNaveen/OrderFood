@@ -1,18 +1,23 @@
 import React from 'react';
 import CardItem from './CardItem';
-
+import { useState,useEffect } from 'react';
 const AvailableItems = () => {
-  // Define the items array
-  const items = [
-    { id: 1, title: 'Item 1', price: '$10', description: 'Description 1', available: true },
-    { id: 2, title: 'Item 2', price: '$15', description: 'Description 2', available: false },
-    { id: 3, title: 'Item 3', price: '$20', description: 'Description 3', available: true },
-    // Add more items as needed
-    { id: 4, title: 'Item 4', price: '$25', description: 'Description 4', available: true },
-    { id: 5, title: 'Item 5', price: '$30', description: 'Description 5', available: false },
-  ];
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const fetchItems = async () => {
+        try {
+            const response = await fetch("http://localhost:3500/api/_e/item");
+            const resData = await response.json();
+            setItems(resData.data.items);
+        } catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    };
 
-  const availableItems = items.filter((item) => item.available);
+    fetchItems();
+  }, []);
+  
+  const availableItems = items.filter((item) => item.is_available);
 
   return (
     <div className="container-fluid align-items-center" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
@@ -20,10 +25,12 @@ const AvailableItems = () => {
         <CardItem
           key={item.id}
           title={item.title}
-          price={item.price}
+          price={item.cost}
           description={item.description}
-          available={item.available}
-          showButtons={false} // Do not render buttons
+          available={item.is_available}
+          image={item.image}
+          max_limit={item.max_limit}
+          showButtons={false}
         />
       ))}
     </div>
