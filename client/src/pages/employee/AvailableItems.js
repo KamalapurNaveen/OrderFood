@@ -6,7 +6,7 @@ const AvailableItems = () => {
   useEffect(() => {
     const fetchItems = async () => {
         try {
-            const response = await fetch("http://localhost:3500/api/_e/item");
+            const response = await fetch("http://localhost:3500/api/_e/item", {credentials: "include"});
             const resData = await response.json();
             setItems(resData.data.items);
         } catch (error) {
