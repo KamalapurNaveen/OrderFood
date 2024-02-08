@@ -12,10 +12,10 @@ const Dashboard = () => {
   let activeComponent;
   switch (activeTab) {
     case 'menu':
-      activeComponent = <Menu />;
+      activeComponent = <Menu setActiveTab={setActiveTab}/>;
       break;
     case 'cart':
-      activeComponent = <Cart />;
+      activeComponent = <Cart setActiveTab={setActiveTab}/>;
       break;
     case 'recent-orders':
       activeComponent = <RecentOrders />;

@@ -20,7 +20,6 @@ async function getOrderQueue({OrderModel}){
 }
 
 async function addCustomerOrder({ order, walletId,  userId, userName, OrderModel, WalletModel }) {
-    console.log(userId, userName)
     const wallet = await WalletModel.findById(walletId);
     if (wallet.balance < order.cost) {
         return { balanceAvailable: false, message: "Insufficient balance." };
@@ -36,8 +35,6 @@ async function addCustomerOrder({ order, walletId,  userId, userName, OrderModel
     await wallet.save();
     return { balanceAvailable: true, orderId: createdOrder._id, message: "Order placed successfully." };
 }
-
-// async function cancelCustomerOrder({}){}
 
 async function cancelCustomerOrder({ orderId, walletId, WalletModel, OrderModel }) {
     const order = await OrderModel.findById(orderId);
