@@ -27,6 +27,7 @@ async function customerLogin(req, res){
         res.status(200).send({success : true, message : "Authorized"})
     } catch(err) {
         var statusCode = 500
+        console.log(err.message, req.body)
         if (err.message === 'invalid email' || err.message === 'invalid password') {
             statusCode =  401
         }
@@ -55,16 +56,15 @@ async function getAllItems(req,res){
 
 async function addOrder(req,res){
     try {
-        const order = req.body.order
-        // const { walletId, userName } = req.sessionData
-        // const userId = req.sessionData.id
+        const order = req.body
+        const walletId = req.sessionData.wallet_id
+        const userName = req.sessionData.name
+        const userId = req.sessionData.id
 
-        const walletId = '65c08db4504d89f35a81aea1'
-        const userId="892192891" 
-        const userName="TempUser"
         const walletStatus = await orderIntractor.addCustomerOrder({order, walletId,userId, userName,  OrderModel, WalletModel})
         res.status(200).send({success : true, data: {walletStatus}})
     }catch(err){
+        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }
 }

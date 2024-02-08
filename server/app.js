@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express')
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const cors = require('cors');
 
@@ -8,6 +9,7 @@ const MONGO_URL = require("./config").MONGO_URL
 
 const apiRoute = require("./routes/index")
 const initDB = require("./database/init")
+initDB(MONGO_URL)
 const app = express();
 
 const corsOptions = {
@@ -16,11 +18,10 @@ const corsOptions = {
     credentials: true,
     optionsSuccessStatus: 204,
 };  
-  
-  
-initDB(MONGO_URL)
-app.use(cors(corsOptions));
+
 app.use(bodyParser.json())
+app.use(cors(corsOptions));  
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api", apiRoute)
 

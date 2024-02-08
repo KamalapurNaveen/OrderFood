@@ -11,16 +11,13 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      var response = await fetch("http://127.0.0.1:3500/api/_c/auth/login", {
+      var response = await fetch("http://localhost:3500/api/_c/auth/login", {
         method: "post",
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
+        body: JSON.stringify(values),
         headers: {
           "Content-Type": "application/json"
         },
-        credentials: 'include',
+        credentials: "include"
       })
       var data = await response.json()
       console.log(data)
