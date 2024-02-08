@@ -49,21 +49,24 @@ const AddItem = () => {
         const addItem= async(values)=>{
           try{
 
-            var response = await fetch("http://127.0.0.1:3500/api/_c/auth/login", {
+            var response = await fetch("http://127.0.0.1:3500/api/_e/item/add", {
               method: "post",
-              body: JSON.stringify({
-                name:values.name,
-                description:values.description,
-                image        :values.imageUrl,
-                max_limit    : values.maxLimit,
-                is_available : values.available,
-                cost         : values.price
-  
-              }),
+              body: JSON.stringify(
+                {
+                  items : [{
+                    name         : values.name,
+                    description  : values.description,
+                    image        : values.imageUrl,
+                    max_limit    : values.maxLimit,
+                    is_available : values.available,
+                    cost         : values.price
+                  }]
+                }
+              ),
               headers: {
                 "Content-Type": "application/json"
               },
-             
+              credentials: "include",
             })
             var data = await response.json()
             console.log(data)
