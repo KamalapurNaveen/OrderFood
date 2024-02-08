@@ -18,7 +18,7 @@ async function createJWT(data){
 }
 
 async function authenticate(type ,req, res, next){
-    const token = req.cookies.access_token;
+    const token = req.cookies?.access_token;
     if (!token) {
         return res.status(403).send({success : false, message : "Bad Request"})
     }
