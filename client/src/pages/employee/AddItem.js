@@ -51,7 +51,8 @@ const AddItem = () => {
         }
         const addItem= async(values)=>{
           try{
-            var response = await fetch("http://127.0.0.1:3500/api/_e/item/add", {
+
+            var response = await fetch("http://localhost:3500/api/_e/item/add", {
               method: "post",
               body: JSON.stringify(
                 {
