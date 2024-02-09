@@ -21,19 +21,10 @@ const UnavailableItems = () => {
   const unavailableItems = items.filter((item) => !item.is_available);
 
   return (
-    <div className="container-fluid align-items-center" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-      {unavailableItems.map((item) => (
-        <CardItem
-          key={item.id}
-          title={item.title}
-          price={item.cost}
-          description={item.description}
-          available={item.is_available}
-          image={item.image}
-          max_limit={item.max_limit}
-          showButtons={false}
-        />
-      ))}
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: 0, margin: 0 }}>
+    {unavailableItems.map((item, index) => (
+        <CardItem key={index} item={item}  />
+    ))}
     </div>
   );
 };

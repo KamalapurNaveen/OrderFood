@@ -45,10 +45,12 @@ const AddItem = () => {
           available: formData.get('itemAvailability') === 'on', // Convert to boolean
         };
         
-        if(!validation(newItem,e)) return ;
+        if(!validation(newItem,e)) {
+          resetData(e)
+          return ;
+        }
         const addItem= async(values)=>{
           try{
-
             var response = await fetch("http://127.0.0.1:3500/api/_e/item/add", {
               method: "post",
               body: JSON.stringify(
