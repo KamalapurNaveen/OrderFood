@@ -26,7 +26,7 @@ async function loginCustomer({ email, password, auth, CustomerModel }){
         } else {
             const token = await auth.createJWT({id : user._id,name : user.name, email, wallet_id : user.wallet_id, type : "customer" })
             return function setCookie(res){
-                res.cookie("access_token", token, { sameSite: 'None', expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000) });
+                res.cookie("access_token", token, { sameSite: 'Lax', expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000) });
             }
         }
     }
