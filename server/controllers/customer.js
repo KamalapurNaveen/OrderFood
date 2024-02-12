@@ -4,6 +4,7 @@ const auth = require("../services/auth.service")
 const customerInteractor = require("../interactors/customer")
 const itemInteractor  = require("../interactors/item")
 const orderIntractor  = require("../interactors/order")
+const walletIntractor  = require("../interactors/wallet")
 
 async function customerSignup(req, res){
     const { name, email, mobile, password } = req.body;
@@ -71,8 +72,7 @@ async function addOrder(req,res){
 
 async function cancelOrder(req, res){
     try {
-        // const walletId = req.sessionData.wallet_id
-        const walletId = '65c08db4504d89f35a81aea1'
+        const walletId = req.sessionData.wallet_id
         const orderId = req.query.orderId
         
         const response = await orderIntractor.cancelCustomerOrder({orderId, walletId, WalletModel, OrderModel})
@@ -83,12 +83,31 @@ async function cancelOrder(req, res){
     }
 }
 async function getHistory(req, res){
-    // const walletId = req.sessionData.wallet_id
-    const walletId = '65c08db4504d89f35a81aea1'
+    const walletId = req.sessionData.wallet_id
     
     try{
         const history = await orderIntractor.getCustomerOrderHistory({walletId, WalletModel, OrderModel});
         res.status(200).send({success : true, history })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function getTransactions(req, res){
+    const walletId = req.sessionData.wallet_id
+
+    try {
+        const transactions = await walletIntractor.getTransactions({walletId, WalletModel})
+        res.status(200).send({success : true, transactions })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+async function getUserInfo(req,res){
+    try {
+        const id = req.sessionData.id
+        const info = await customerInteractor.getProfileInfo({id, CustomerModel})
+        res.status(200).send({success : true, info })
     }catch(err){
         res.status(500).send({success : false, message : err.message})
     }
@@ -101,5 +120,7 @@ module.exports = {
     getAllItems,
     addOrder,
     cancelOrder,
-    getHistory
+    getHistory,
+    getTransactions,
+    getUserInfo
 }

@@ -20,10 +20,9 @@ const Login = () => {
         credentials: "include"
       })
       var data = await response.json()
-      console.log(data)
       if (data.success) {
         login('customer')
-        navigate("/customer/dashboard")
+        navigate("/customer")
       }
     } catch (err) {
       console.log(err)

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
-
-import CartList from "../../components/customerCartList"
-import BillCard from "../../components/customerBillCard"
 import Typography from 'antd/es/typography/Typography';
+import CartList from "./components/CartList"
+import BillCard from "./components/BillCard"
+import CustomModel from './components/CustomModel';
+import OrderStatus from  './components/OrderStatus'
 
 function parseOrderData(jsonData) {
-    
     const orderItems = Object.keys(jsonData).map(itemId => {
         const itemData = jsonData[itemId];
         return {
@@ -19,25 +17,25 @@ function parseOrderData(jsonData) {
             quantity: itemData.quantity,
         };
     });
-    
     const totalCost = orderItems.reduce((total, item) => total + (item.cost * item.quantity), 0);
-    
     return {
         items: orderItems,
         cost: totalCost
     };
 }
 
-
-export default function Cart({setActiveTab}) {
-    const navigate = useNavigate();
+export default function Cart() {
+    const [showStatusModel, setShowStatusModel] = useState(false);
+    const [walletStatus, setWalletStatus] = useState({ balanceAvailable: false, message: "Something went wrong. Please try again later." });
+    const [disable, setDisable] = useState(true);
     const [cartItems, setCartItems] = useState(() => {
         const storedCart = window.localStorage.getItem("cart");
         return storedCart ? JSON.parse(storedCart) : {};
     });
-    
+
     useEffect(() => {
         window.localStorage.setItem("cart", JSON.stringify(cartItems));
+        setDisable(Object.keys(cartItems).length === 0);
     }, [cartItems]);
 
     const updateCartItems = ({ item, quantity }) => {
@@ -57,7 +55,6 @@ export default function Cart({setActiveTab}) {
     }, 0);
 
     const handlePlaceOrder = async () => {
-        console.log("Placing order...");
         var requestOptions = {
             method: 'POST',
             headers: {
@@ -65,32 +62,39 @@ export default function Cart({setActiveTab}) {
             },
             body: JSON.stringify(parseOrderData(cartItems)),
             credentials: "include"
-          };
+        };
 
         await fetch("http://localhost:3500/api/_c/order/add", requestOptions)
             .then(response => response.json())
-            .then(result =>{
-                if(result.data.walletStatus.balanceAvailable == false){
-                    console.log(result.data.walletStatus.message)
-                }else{
-                    setActiveTab('recent-orders')
-                    console.log(result.data.walletStatus.message)
+            .then(result => {
+                if (result.data.walletStatus.balanceAvailable == false) {
+                    setWalletStatus(result.data.walletStatus)
+                    setShowStatusModel(true)
+                } else {
+                    setCartItems({})
+                    setWalletStatus(result.data.walletStatus)
+                    setShowStatusModel(true)
                 }
             })
-            .catch(error => console.log('error', error));
+            .catch(error => {
+                setShowStatusModel(true)
+            });
     };
 
     return (
-        <div>
+        <div style={{ margin: "2vw" }}>
             <Typography style={{ textAlign: 'center', color: 'grey', margin: 20, fontWeight: 200 }}>ITEM(S) ADDED</Typography>
             <CartList updateCartItems={updateCartItems} cartValues={cartValues} />
             <Typography style={{ textAlign: 'center', color: 'grey', margin: 20, fontWeight: 200 }}>BILL SUMMARY</Typography>
             <BillCard totalCost={totalCost} />
             <div style={styles.placeOrderButtonContainer}>
-                <Button type="primary" style={styles.placeOrderButton} onClick={handlePlaceOrder}>
+                <Button type="primary" style={styles.placeOrderButton} onClick={handlePlaceOrder} disabled={disable}>
                     Place Order <ArrowRightOutlined style={{ verticalAlign: 'middle' }} />
                 </Button>
             </div>
+            <CustomModel isVisible={showStatusModel} closeModel={() => setShowStatusModel(false)}>
+                <OrderStatus walletStatus={walletStatus} />
+            </CustomModel>
         </div>
     );
 }

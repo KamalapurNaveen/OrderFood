@@ -38,7 +38,11 @@ async function logoutCustomer(){
     }
 }
 
+async function getProfileInfo({id, CustomerModel}){
+    const {_id, email, name, mobile}  = await CustomerModel.findById(id)
+    return {id, email, name, mobile};
+}
 
 module.exports = {
-    registerCustomer, loginCustomer, logoutCustomer
+    registerCustomer, loginCustomer, logoutCustomer, getProfileInfo
 }
