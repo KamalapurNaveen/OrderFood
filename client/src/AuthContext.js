@@ -10,12 +10,14 @@ export const AuthProvider = ({ children }) => {
   });
   const [userRole, setUserRole] = useState(() => {
     // Initialize userRole state based on localStorage
-    return localStorage.getItem('userRole') || 'employee';
+    return localStorage.getItem('userRole') || '';
   });
 
   const login = (role) => {
     setIsAuthenticated(true);
     setUserRole(role);
+    localStorage.setItem('isAuthenticated', isAuthenticated);
+    localStorage.setItem('userRole', userRole);
   };
 
   const logout = () => {

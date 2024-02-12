@@ -45,6 +45,7 @@ async function getAllItems(req,res){
     }
 }
 
+
 async function addItems(req, res){
     try{
         const items = req.body.items
@@ -64,7 +65,26 @@ async function deleteItem(req,res){
         res.status(500).send({success : false, message : err.message})
     }
 }
-
+async function getItem(req,res){
+    try{
+        const itemId = req.query.id
+        const item=await itemInteractor.getItem({itemId, ItemModel})
+       // console.log(itemId,item)
+        res.status(200).send({success : true, data:item})
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+async function updateItemInfo(req,res){
+    try{
+        const itemInfo=req.body.item;
+        const updatedItemInfo=await itemInteractor.updateItemInfo({itemInfo,ItemModel});
+        res.status(200).send({success : true, data : { item : updatedItemInfo } })
+    }
+    catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
 async function getOrderInfo(req,res){
     try{
         const id = req.query.id
@@ -108,6 +128,8 @@ module.exports = {
     addItems,
     getAllItems,
     deleteItem,
+    getItem,
+    updateItemInfo,
     getOrderInfo,
     updateOrderInfo,
     getOrderHistory,
