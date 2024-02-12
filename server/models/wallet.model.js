@@ -14,6 +14,10 @@ const transactionSchema = new mongoose.Schema({
         red : 'Order',
         required : true
     },
+    time: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 var WalletSchema = new Schema({
