@@ -84,7 +84,7 @@ const AddItem = () => {
             message.error("Error while adding item")
             console.log(error)
           }
-  
+          resetData(e);
         }
         addItem(newItem);
 

@@ -1,33 +1,28 @@
 import React from 'react';
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
-const items = [
-  {
-    key: '1',
-    label: '1st menu item'
-  },
-  {
-    key: '2',
-    label: '2st menu item'
-  },
-  {
-    key: '3',
-    label: '3st menu gdghjgdggs item'
-  },
+import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Space, Menu } from 'antd';
 
-];
-const DropdownItems = () => (
-  <Dropdown
-    menu={{
-      items,
-    }}
-  >
-    <a onClick={(e) => e.preventDefault()}>
-      <Space>
-         Ordered Items
-        <DownOutlined />
-      </Space>
-    </a>
-  </Dropdown>
-);
+const DropdownItems = ({ items }) => {
+  const menuItems = (
+    <Menu>
+      {items.map(item => (
+        <Menu.Item key={item.key}>
+          {`${item.name} - ${item.quantity}`}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  return (
+    <Dropdown overlay={menuItems}>
+      <a onClick={e => e.preventDefault()}>
+        <Space>
+          Ordered Items
+          <DownOutlined />
+        </Space>
+      </a>
+    </Dropdown>
+  );
+};
+
 export default DropdownItems;

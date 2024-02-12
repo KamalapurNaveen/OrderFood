@@ -13,6 +13,6 @@
   background-image: url('./pizza.jpg');
   background-size: cover;
   background-position: center;
-  opacity: 0.7;
-  filter: blur(1px) brightness(0.9);
+  opacity: 0.9;
+  filter: blur(1px) brightness(0.95);
 }

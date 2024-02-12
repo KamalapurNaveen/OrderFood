@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QrReader from 'react-qr-scanner';
-import { Row, Col, Modal, Button } from 'antd';
+import { Row, Col, Modal, Button ,Tag, message} from 'antd';
 
 const Scanner = () => {
   const [result, setResult] = useState('');
@@ -45,12 +45,11 @@ const Scanner = () => {
     try {
       // Fetch order data using orderId
       // For demonstration, use dummy order data
-      const dummyOrderData = {
-        orderId: {orderId},
-        customerName: 'John Doe',
-        // Add more order details as needed
-      };
-      setOrderData(orderId);
+      const response = await fetch(`http://localhost:3500/api/_e/order?id=${orderId}`,{credentials: "include"});
+
+      const resData = await response.json();
+      setOrderData(resData.data["order"]);
+      console.log(resData.data["order"]);
       setShowModal(true);
       // Pause scanning when modal is displayed
       if (scannerRef.current) {
@@ -72,7 +71,79 @@ const Scanner = () => {
     // Show the scanner
     setScannerVisible(true);
   };
-
+  const renderStatusTag = (status) => {
+    let color = 'blue';
+    if (status === 'delivered') {
+      color = 'green';
+    } else if (status === 'cancelled') {
+      color = 'red';
+    }
+    return <Tag color={color}>{status.toUpperCase()}</Tag>;
+  };
+  const handleCancelOrder = async (orderId) => {
+    try {
+     
+      const response = await fetch(`http://localhost:3500/api/_e/order`, {
+        method: 'PUT', // Assuming you are using a PUT request to mark the order as delivered
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+          "order":{
+             _id: orderId,
+             status:"cancelled"
+          }
+        }),
+        credentials: 'include',
+      });
+      const resData=await response.json();
+      console.log(resData);
+      if (resData.success) {
+        console.log('Order delivered successfully');
+        message.success("Order delivered successfully")
+      } else {
+        message.error("status is not ok")
+        console.error('Failed to deliver order:', response.statusText);
+      }
+    } catch (error) {
+      message.error("Error delivering order, 500")
+      console.error('Error delivering order:', error);
+    }
+    handleModalClose();
+  };
+  
+  const handleDeliverOrder = async (orderId) => {
+    try {
+     
+      const response = await fetch(`http://localhost:3500/api/_e/order`, {
+        method: 'PUT', // Assuming you are using a PUT request to mark the order as delivered
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+          "order":{
+             _id: orderId,
+             status:"delivered"
+          }
+        }),
+        credentials: 'include',
+      });
+      const resData=await response.json();
+      console.log(resData);
+      if (resData.success) {
+        console.log('Order delivered successfully');
+        message.success("Order delivered successfully")
+      } else {
+        message.error("status is not ok")
+        console.error('Failed to deliver order:', response.statusText);
+      }
+    } catch (error) {
+      message.error("Error delivering order, 500")
+      console.error('Error delivering order:', error);
+    }
+    handleModalClose();
+  };
+  
   return (
     <>
       <Row justify="center" align="middle" className="mt-4" style={{ height: 'calc(100vh - 64px)' }}>
@@ -90,25 +161,50 @@ const Scanner = () => {
       </Row>
 
       <Modal
-        title="Order Details"
-        visible={showModal}
-        onCancel={handleModalClose}
-        footer={[
-          <Button key="cancel" onClick={handleModalClose}>
-            Cancel
-          </Button>,
-          <Button key="delivered" type="primary" onClick={handleModalClose}>
-            Delivered
-          </Button>,
-        ]}
-        centered
-        maskClosable={false}
-        closable={false}
-      >
-        <p>Order ID: {orderData}</p>
-        
-        {/* Add more order details as needed */}
-      </Modal>
+  title="Order Details"
+  visible={showModal}
+  onCancel={handleModalClose}
+  footer={[
+    <Button key="cancel" onClick={()=>handleCancelOrder(orderData._id)}>
+      Cancel
+    </Button>,
+    <Button key="delivered" type="primary" onClick={()=>handleDeliverOrder(orderData._id)}>
+      Delivered
+    </Button>,
+  ]}
+  centered
+  maskClosable={false}
+  closable={false}
+>
+  {orderData && ( // Check if orderData is not null
+    <>
+      <p>
+        <strong>Order ID:</strong> {orderData._id}
+      </p>
+      <p>
+        <strong>Username:</strong> {orderData.userName}
+      </p>
+      <p>
+        <strong>Cost:</strong> ₹{orderData.cost}
+      </p>
+      <p>
+        <strong>Status:</strong> <Tag color={orderData.status === 'delivered' ? 'green' : 'red'}>{orderData.status}</Tag>
+      </p>
+      <p>
+        <strong>Items:</strong>
+      </p>
+      <ul>
+        {orderData.items.map((item, index) => (
+          <li key={index}>
+            {item.name} -  {item.quantity}
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</Modal>
+
+
     </>
   );
 };

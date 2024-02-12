@@ -53,7 +53,7 @@ const Dashboard = () => {
         </Container>
       </Navbar>
 
-      <Container className="mt-4">
+      <Container className="mt-4" style={{height:"100vh"}}>
         {activeTab === 'scanner' && <Scanner />}
         {activeTab === 'menu' && <ManageMenu />}
         {activeTab === 'orders' && <Orders />}
