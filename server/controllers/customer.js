@@ -1,5 +1,6 @@
 const {CustomerModel, ItemModel, OrderModel, WalletModel} = require("../models")
 const auth = require("../services/auth.service")
+const mail = require("../services/mail.service")
 
 const customerInteractor = require("../interactors/customer")
 const itemInteractor  = require("../interactors/item")
@@ -97,8 +98,8 @@ async function getTransactions(req, res){
     const walletId = req.sessionData.wallet_id
 
     try {
-        const transactions = await walletIntractor.getTransactions({walletId, WalletModel})
-        res.status(200).send({success : true, transactions })
+        const wallet = await walletIntractor.getTransactions({walletId, WalletModel})
+        res.status(200).send({success : true, wallet })
     }catch(err){
         res.status(500).send({success : false, message : err.message})
     }
@@ -113,14 +114,59 @@ async function getUserInfo(req,res){
     }
 }
 
+async function updatePassword(req, res){
+    try{
+        const id = req.sessionData.id
+        const {currentPassword, newPassword} = { ...req.body }
+        await customerInteractor.updatePassword({id, currentPassword, newPassword, CustomerModel, auth})
+        res.status(200).send({success : true, message : 'Your password has been changed successfully' })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function customerForgetPasswordSendOTP(req, res){
+    try{
+        const email = req.query.email
+        const hash = await customerInteractor.sendOTP({email, CustomerModel, mail})
+        res.status(200).send({success : true, hash })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function customerForgetPasswordVerifyOTP(req, res){
+    try{
+        const {otp, hash, email} = {...req.query}
+        const response = await customerInteractor.verifyOTP({otp, hash, email, mail})
+        res.status(200).send({success : true, data : response })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }   
+}
+
+async function customerForgetPasswordUpdate(req, res){
+    try{
+        const {password, hash, email, otp} = {...req.body}
+        const response = await customerInteractor.updatePassword({password, hash, email, otp, CustomerModel, mail, auth})
+        res.status(200).send({success : true, data : response })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }   
+}
+
 module.exports = {
     customerSignup, 
     customerLogin, 
     customerLogout, 
+    customerForgetPasswordSendOTP, 
+    customerForgetPasswordVerifyOTP, 
+    customerForgetPasswordUpdate,
     getAllItems,
     addOrder,
     cancelOrder,
     getHistory,
     getTransactions,
-    getUserInfo
+    getUserInfo,
+    updatePassword,
 }

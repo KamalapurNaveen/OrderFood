@@ -1,30 +1,9 @@
 import React from "react";
-import { List, Tag, Typography } from 'antd';
+import { List, Tag, Typography, Card } from 'antd';
 
 export default function Wallet(){
-    const [transactions, setTransactions] = React.useState([
-        {
-            type : 'debit',
-            amount : '150',
-            description : 'Payment for order 65c3507463d9f819d12a19a0',
-            _id : '65c3507463d9f819d12a19a2',
-            orderId : '65c3507463d9f819d12a19a0'
-        },
-        {
-            type : 'debit',
-            amount : '180',
-            description : 'Payment for order 65c3507463d9f819d12a19a0',
-            _id : '65c3507463d9f819d12a19a2',
-            orderId : '65c3507463d9f819d12a19a0'
-        },
-        {
-            type : 'debit',
-            amount : '69',
-            description : 'Payment for order 65c3507463d9f819d12a19a0',
-            _id : '65c3507463d9f819d12a19a2',
-            orderId : '65c3507463d9f819d12a19a0'
-        }
-    ]);
+    const [transactions, setTransactions] = React.useState([]);
+    const [balance, setBalance] = React.useState(0);
 
     React.useEffect(()=>{
         fetch('http://localhost:3500/api/_c/wallet/transactions',{ 
@@ -32,7 +11,10 @@ export default function Wallet(){
             
         })
         .then(res => res.json())
-        .then(data => setTransactions(data.transactions.reverse()))
+        .then(data => {
+            setTransactions(data.wallet.transactions.reverse())
+            setBalance(data.wallet.balance)
+        })
         .catch(err => console.log(err))
     }, [])
 
@@ -49,6 +31,7 @@ export default function Wallet(){
     return (
         <div style={{margin : '2vw'}}>
             <Typography style={{ textAlign: 'center', color: 'grey', margin: 20, fontWeight: 200 }}>WALLET TRANSACTIONS</Typography>
+            <Card.Grid style={{ textAlign: 'left', color: 'black', margin: 20, fontWeight: 500 }}>Balance : ₹{balance}</Card.Grid>
             <List
                 style={{ padding: 5, paddingLeft: 20, backgroundColor: "white", borderRadius: 5 }}
                 dataSource={transactions}
