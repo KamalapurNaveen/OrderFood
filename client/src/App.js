@@ -11,13 +11,14 @@ import Home from './pages/Home';
 import Unauthorized from './Unauthorized';
 import { AuthProvider } from './AuthContext';
 import { ErrorPage } from './ErrorPage';
+import HomePage from './pages/HomePage';
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="App">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomePage/>} />
             <Route path="/customer/signin" element={< CustomerLogin />} />
             <Route path="/customer/signup" element={< CustomerSignup/>} />
             <Route path="/employee/signin" element={< EmployeeLogin />} />

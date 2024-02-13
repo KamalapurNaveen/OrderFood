@@ -1,67 +1,54 @@
+import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { Row, Col, Card, Form, Input, Button, message } from 'antd';
+import { Avatar, Button, Card } from 'antd';
+import  { useAuth } from './../../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
+const { Meta } = Card;
 
-const Profile = () => {
-  const [userData, setUserData] = useState({
-    name: 'John Doe',
-    email: 'john@example.com',
-    // Add more user details as needed
-  });
-  const [editMode, setEditMode] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+export default function Profile(){
+    const {logout} = useAuth();
+    const navigate = useNavigate();
 
-  const handleEditPassword = () => {
-    setEditMode(true);
-  };
+    const [info, setInfo] = useState({
+        name : '',
+        _id : '',
+        email : ''
+    })
 
-  const handleSubmitPassword = (e) => {
-   // e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      message.error('New password and confirm password must match.');
-      return;
+    React.useEffect(()=>{
+        fetch('http://localhost:3500/api/_e/profile', {credentials : "include"})
+        .then(resp => resp.json())
+        .then(data => setInfo(data.info))
+        .catch(error => console.log(error))
+    },[])
+
+    function customerLogout(){
+        logout()
+        navigate('/')
     }
-    // Perform API call to change password
-    // Reset form fields and exit edit mode
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
-    setEditMode(false);
-    message.success('Password changed successfully!');
-  };
 
-  return (
-    <Row justify="center" style={{  }}>
-      <Col xs={24} sm={18} md={12} lg={8}>
-        <Card title="User Profile">
-          <p><strong>Name:</strong> {userData.name}</p>
-          <p><strong>Email:</strong> {userData.email}</p>
-          {/* Add more user details here */}
-          {!editMode ? (
-            <Button type="primary" onClick={handleEditPassword}>Edit Password</Button>
-          ) : (
-            <Form layout="vertical" onFinish={handleSubmitPassword}>
-              <Form.Item label="Current Password" name="currentPassword">
-                <Input.Password value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
-              </Form.Item>
-              <Form.Item label="New Password" name="newPassword">
-                <Input.Password value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-              </Form.Item>
-              <Form.Item label="Confirm New Password" name="confirmPassword">
-                <Input.Password value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">Save Password</Button>
-                <Button onClick={() => setEditMode(false)} style={{ marginLeft: '10px' }}>Cancel</Button>
-              </Form.Item>
-            </Form>
-          )}
-        </Card>
-      </Col>
-    </Row>
-  );
-};
-
-export default Profile;
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Card
+                hoverable
+                style={{ width: 400, marginTop: 100 }}
+                actions={[
+                    <div><EditOutlined/> Change Password</div>,
+                    <div onClick={() => customerLogout()}><LogoutOutlined/> Logout</div>,
+                ]}
+            >
+                <Meta
+                    avatar={<Avatar shape='square'>{info.name.charAt(0)}</Avatar>}
+                    title={info.name}
+                    description={
+                        <>
+                            <p>Name: {info.name}</p>
+                            <p>Email: {info.email}</p>
+                        </>
+                    }
+                />
+            </Card>
+        </div>
+    );
+}

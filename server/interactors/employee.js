@@ -1,3 +1,5 @@
+const { EmployeeModel } = require("../models");
+
 async function registerEmployee({
     name, email, mobile, password, auth, EmployeeModel
 }){
@@ -37,7 +39,11 @@ async function logoutEmployee(){
     }
 }
 
+async function getProfileInfo({id, CustomerModel}){
+    const {_id, email, name }  = await EmployeeModel.findById(id)
+    return {id, email, name};
+}
 
 module.exports = {
-    registerEmployee, loginEmployee, logoutEmployee
+    registerEmployee, loginEmployee, logoutEmployee,getProfileInfo
 }

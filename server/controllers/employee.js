@@ -36,6 +36,15 @@ async function logout(_, res){
     }
 }
 
+async function getUserInfo(req,res){
+    try {
+        const id = req.sessionData.id
+        const info = await employeeInteractor.getProfileInfo({id, EmployeeModel})
+        res.status(200).send({success : true, info })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
 async function getAllItems(req,res){
     try{
         const items = await itemInteractor.getAllItems({ItemModel})
@@ -125,6 +134,7 @@ module.exports = {
     signup, 
     login, 
     logout,
+    getUserInfo,
     addItems,
     getAllItems,
     deleteItem,
