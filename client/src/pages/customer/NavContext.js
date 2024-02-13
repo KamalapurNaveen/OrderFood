@@ -38,7 +38,7 @@ export const CustomerNavProvider = () => {
       <div style={{paddingBottom : "100px", minHeight: '100vh', backgroundColor: 'rgba(195, 195, 195, 0.33)'}}>  
         <NavBar/>
         {components[activeTab]}
-        {windowWidth <= 600 && (
+        {windowWidth <= 990 && (
           <div style={{ position: "fixed", bottom: "0", width: "100%", backgroundColor: "white", borderTop: "1px solid grey", textAlign: "center" }}>
             <BottomNavBar/>
           </div>

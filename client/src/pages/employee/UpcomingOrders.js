@@ -9,6 +9,13 @@ const UpcomingOrders = () => {
   const [upcomingOrders, setUpcomingOrders] = useState([]);
   const [itemImages, setItemImages] = useState({});
 
+  useEffect(()=>{
+    fetch('http://localhost:3500/api/_e/order/queue/stats', {credentials : 'include'})
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+  },[])
+
   useEffect(() => {
     const fetchItems = async () => {
       try {

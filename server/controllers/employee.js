@@ -130,6 +130,15 @@ async function getOrderQueue(req,res){
     }
 }
 
+async function getQueueStats(req, res){
+    try {
+        const stats = await orderInteractor.getQueueStats({OrderModel, ItemModel})
+        res.status(200).send({success : true, data : stats })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
 module.exports = {
     signup, 
     login, 
@@ -144,4 +153,5 @@ module.exports = {
     updateOrderInfo,
     getOrderHistory,
     getOrderQueue,
+    getQueueStats,
 }

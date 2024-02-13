@@ -10,13 +10,30 @@ async function updateOrderInfo({orderInfo, OrderModel}){
 }
 
 async function getOrderHistory({OrderModel}){
-    const orderHistory = await OrderModel.find({ status: 'delivered' }).sort({ time: -1 }).limit(20);
+    const orderHistory = await OrderModel.find({ status: 'delivered' }).sort({ time: -1 }).limit(30);
     return orderHistory;
 }
 
 async function getOrderQueue({OrderModel}){
-    const orderQueue = await OrderModel.find({ status: 'pending' }).sort({ time: 1 }).limit(20);
+    const  orderQueue = await OrderModel.find({ status: 'pending' }).sort({ time: 1 });
     return orderQueue;    
+}
+
+async function getQueueStats({OrderModel, ItemModel}){
+    const queue = await OrderModel.find({ status: 'pending' }).sort({ time: 1 });
+    const items = queue.reduce((prev, order)=>{ return prev.concat(order.items)}, [])
+    var data = {}
+
+    items.forEach(item => {
+        data[item.item] 
+            ? data[item.item].quantity += item.quantity
+            : data[item.item] = {name : item.name, quantity : item.quantity}
+    });
+
+    const images = await ItemModel.find({_id : {$in : Object.keys(data)}}, {image : 1})
+    images.forEach(image => data[image._id].image = image.image )
+    const stats = Object.values(data)
+    return { queue, stats }
 }
 
 async function addCustomerOrder({ order, walletId,  userId, userName, OrderModel, WalletModel }) {
@@ -75,5 +92,6 @@ module.exports = {
     getOrderQueue,
     addCustomerOrder,
     cancelCustomerOrder,
-    getCustomerOrderHistory
+    getCustomerOrderHistory,
+    getQueueStats
 }

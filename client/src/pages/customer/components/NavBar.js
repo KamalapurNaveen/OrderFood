@@ -25,6 +25,7 @@ export default function NavBar(){
                     <Nav.Link href="#menu" onClick={() => handleTabClick('menu')} className={activeTab === 'menu' ? 'active' : ''}>Menu</Nav.Link>
                     <Nav.Link href="#cart" onClick={() => handleTabClick('cart')} className={activeTab === 'cart' ? 'active' : ''}>Cart</Nav.Link>
                     <Nav.Link href="#history" onClick={() => handleTabClick('history')} className={activeTab === 'history' ? 'active' : ''}>History</Nav.Link>
+                    <Nav.Link href="#wallet" onClick={() => handleTabClick('wallet')} className={activeTab === 'wallet' ? 'active' : ''}>Wallet</Nav.Link>
                     <Nav.Link href="#profile" onClick={() => handleTabClick('profile')} className={activeTab === 'profile' ? 'active' : ''}>Profile</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
