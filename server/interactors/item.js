@@ -3,9 +3,7 @@ async function getAllItems({ItemModel}){
     return items
 }
 async function getItem({ itemId, ItemModel}){
-    console.log(itemId)
     const item=await ItemModel.findById(itemId)
-    console.log(item);
     return item;
 }
 async function addItem({ items, ItemModel }){
