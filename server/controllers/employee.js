@@ -1,5 +1,7 @@
-const { EmployeeModel, ItemModel, OrderModel,CustomerModel ,WalletModel} = require("../models")
+const { EmployeeModel, ItemModel, OrderModel, CustomerModel, WalletModel } = require("../models")
+
 const auth = require("../services/auth.service")
+const storage = require('../services/storage.service')
 const employeeInteractor  = require("../interactors/employee")
 const itemInteractor = require("../interactors/item")
 const orderInteractor = require("../interactors/order")
@@ -77,13 +79,13 @@ async function addMoneyToWallet(req,res){
 
 async function addItems(req, res){
     try{
-        const items = req.body.items
-        await itemInteractor.addItem({items, ItemModel})
+        const items = req.body
+        await itemInteractor.addItem({items, imageName : req.file.filename, imagePath : req.file.path, ItemModel, storage})
         res.status(200).send({success : true, message : "Added Items"})
     }catch(err){
         res.status(500).send({success : false, message : err.message})
     }
-}
+}   
 
 async function deleteItem(req,res){
     try{
@@ -126,9 +128,10 @@ async function getOrderInfo(req,res){
 async function updateOrderInfo(req,res){
     try {
         const orderInfo = req.body.order
-        const updatedOrderInfo = await orderInteractor.updateOrderInfo({orderInfo, OrderModel})
+        const updatedOrderInfo = await orderInteractor.updateOrderInfo({orderInfo, OrderModel, CustomerModel, WalletModel})
         res.status(200).send({success : true, data : { order : updatedOrderInfo } })
     }catch(err){
+        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }
 }

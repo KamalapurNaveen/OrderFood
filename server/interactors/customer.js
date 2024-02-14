@@ -71,9 +71,8 @@ async function sendOTP({email, CustomerModel, mail}){
     if(!user){
         throw new Error('invalid email')
     }else {
-        const otp = 1234
-        // const otp = Math.floor(100000 + Math.random() * 900000)
-        mail.sendMail({to : email, otp})
+        const otp = Math.floor(100000 + Math.random() * 900000)
+        mail.sendMail({ email, otp})
         const hash = await mail.createHash({otp, email})
         return hash
     }

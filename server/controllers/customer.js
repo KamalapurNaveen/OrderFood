@@ -135,17 +135,18 @@ async function updatePassword(req, res){
     }
 }
 
-async function customerForgetPasswordSendOTP(req, res){
+async function customerForgotPasswordSendOTP(req, res){
     try{
         const email = req.query.email
         const hash = await customerInteractor.sendOTP({email, CustomerModel, mail})
         res.status(200).send({success : true, hash })        
     }catch(err){
+        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }
 }
 
-async function customerForgetPasswordVerifyOTP(req, res){
+async function customerForgotPasswordVerifyOTP(req, res){
     try{
         const {otp, hash, email} = {...req.query}
         const response = await customerInteractor.verifyOTP({otp, hash, email, mail})
@@ -155,7 +156,7 @@ async function customerForgetPasswordVerifyOTP(req, res){
     }   
 }
 
-async function customerForgetPasswordUpdate(req, res){
+async function customerForgotPasswordUpdate(req, res){
     try{
         const {password, hash, email, otp} = {...req.body}
         const response = await customerInteractor.updatePassword({password, hash, email, otp, CustomerModel, mail, auth})
@@ -169,9 +170,9 @@ module.exports = {
     customerSignup, 
     customerLogin, 
     customerLogout, 
-    customerForgetPasswordSendOTP, 
-    customerForgetPasswordVerifyOTP, 
-    customerForgetPasswordUpdate,
+    customerForgotPasswordSendOTP, 
+    customerForgotPasswordVerifyOTP, 
+    customerForgotPasswordUpdate,
     getAllItems,
     addOrder,
     cancelOrder,
