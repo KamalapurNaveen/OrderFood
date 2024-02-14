@@ -1,8 +1,29 @@
 const crypto = require('crypto');
-const key = require("../config").FORGET_PASSWORD_KEY; 
+const nodemailer = require("nodemailer");
 
-async function sendMail({to, otp}){
-    console.log(`MailSent -  to:${to} otp:${otp}`)
+const key = require("../config").FORGET_PASSWORD_KEY; 
+const { NODEMAILER_EMAIL, NODEMAILER_PWD } = require('../config');
+ 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: NODEMAILER_EMAIL,
+        pass: NODEMAILER_PWD,
+    },
+});
+
+async function sendMail({email, otp}){
+    try {
+        transporter.sendMail({
+            from: NODEMAILER_EMAIL,
+            to: email,
+            subject: "Password Change OTP",
+            text: `The OTP for changing your password is : ${otp}`,
+        }).then(data =>{
+        })
+    }catch(err){
+        throw err
+    }
 }
 
 async function createHash({ otp, email }){ 
