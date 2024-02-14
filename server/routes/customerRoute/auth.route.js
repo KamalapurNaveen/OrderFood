@@ -1,12 +1,13 @@
 const express = require("express")
 const route = express.Router()
 
-const { customerSignup, customerLogin, customerLogout, customerForgetPasswordSendOTP, customerForgetPasswordVerifyOTP, customerForgetPasswordUpdate } = require("../../controllers/customer")
+const { customerSignup, customerLogin, customerLogout, customerForgotPasswordSendOTP, customerForgotPasswordVerifyOTP, customerForgotPasswordUpdate } = require("../../controllers/customer")
+
 route.post("/signup", customerSignup)
 route.post("/login" , customerLogin)
 route.get("/logout", customerLogout)
-route.get("/forget_password_send_otp", customerForgetPasswordSendOTP)
-route.get("/forget_password_verify_otp", customerForgetPasswordVerifyOTP)
-route.put("/forget_password_update", customerForgetPasswordUpdate)
+route.get("/forgot_password_send_otp", customerForgotPasswordSendOTP)
+route.get("/forgot_password_verify_otp", customerForgotPasswordVerifyOTP)
+route.put("/forgot_password_update", customerForgotPasswordUpdate)
 
 module.exports = route

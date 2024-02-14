@@ -6,7 +6,9 @@ async function getItem({ itemId, ItemModel}){
     const item=await ItemModel.findById(itemId)
     return item;
 }
-async function addItem({ items, ItemModel }){
+async function addItem({items, imageName, imagePath, ItemModel, storage}){
+    const image = await storage.uploadImage({imageName, imagePath})
+    items = {...items, image}
     await ItemModel.create(items)
 }
 async function updateItemInfo({itemInfo, ItemModel}){

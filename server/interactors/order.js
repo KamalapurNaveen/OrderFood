@@ -1,10 +1,24 @@
 async function getOrderInfo({id, OrderModel}){
     const order = await OrderModel.findById(id)
-    console.log(order)
     return order
 }
 
-async function updateOrderInfo({orderInfo, OrderModel}){
+async function updateOrderInfo({orderInfo, OrderModel, CustomerModel, WalletModel}){
+    if(orderInfo.status == 'cancelled'){
+        const order = await OrderModel.findById(orderInfo._id)
+        if(order.status === orderInfo.status) throw Error('Order already cancelled')
+        const customer = await CustomerModel.findById(order.userId)
+        const wallet   = await WalletModel.findById(customer.wallet_id)
+        const transaction = wallet.transactions.find(transaction => transaction.orderId == orderInfo._id);
+        wallet.balance += transaction.amount;
+        wallet.transactions.push({
+            type: 'credit',
+            amount: transaction.amount,
+            message: `Refund for order ${orderInfo._id}`,
+            orderId: orderInfo._id
+        });
+        await wallet.save();
+    }
     const order = await OrderModel.findByIdAndUpdate(orderInfo._id, { $set: orderInfo }, { new: true});
     return order
 }
