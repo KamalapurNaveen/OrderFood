@@ -62,7 +62,7 @@ const OrderHistory = () => {
   };
 
   const handleShowQRCode = (orderId) => {
-    setQrCodeValue(`${orderId}`);
+    setQrCodeValue(`${orderId}|order`);
     setSelectedOrderId(orderId);
     setQrModalVisible(true);
   };

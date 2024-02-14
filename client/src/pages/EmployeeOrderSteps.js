@@ -18,7 +18,7 @@ const employeeOrderSteps = [
   },
   {
     step: 3,
-    title: "Scanner Customers QR",
+    title: "Scan Customers QR",
     text: "Use the QR code scanner to verify customer orders. Ensure that the QR codes provided by customers match the orders placed.",
     image: "scanner_qr_image_url"
   },
@@ -39,6 +39,18 @@ const employeeOrderSteps = [
     title: "Change Status of Order",
     text: "Update the status of customer orders to keep track of their progress. Mark orders as confirmed, in progress, or completed for efficient order management.",
     image: "change_order_status_image_url"
+  },
+  {
+    step: 7,
+    title: "View Recent Orders",
+    text: "Access a list of recent orders to review past transactions and customer preferences. Analyze order history for insights and improvements.",
+    image: "view_recent_orders_image_url"
+  },
+  {
+    step: 8,
+    title: "View Upcoming Orders",
+    text: "Preview and prepare for upcoming orders scheduled for processing. Stay ahead of customer demand and ensure timely order fulfillment.",
+    image: "view_upcoming_orders_image_url"
   }
 ];
 

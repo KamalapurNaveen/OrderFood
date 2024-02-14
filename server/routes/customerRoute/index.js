@@ -6,7 +6,6 @@ const itemRoute = require("./item.route")
 const orderRoute = require("./order.route")
 const walletRoute = require("./wallet.route")
 const profileRoute = require("./profile.route")
-
 const {authenticateCustomer} = require("../../services/auth.service")
 
 route.use("/auth", authRoute)

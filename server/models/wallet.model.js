@@ -12,7 +12,6 @@ const transactionSchema = new mongoose.Schema({
     orderId: {
         type : Schema.Types.ObjectId,
         red : 'Order',
-        required : true
     },
     time: {
         type: Date,

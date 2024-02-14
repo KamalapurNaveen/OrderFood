@@ -1,6 +1,6 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useNav } from '../NavContext';
-
+import logo from "../../logon.png"
 export default function NavBar(){
     const { setActiveTab , activeTab} = useNav()
     const handleTabClick = (tab) => {
@@ -12,7 +12,7 @@ export default function NavBar(){
             <Navbar.Brand style={{marginRight:"50%"}}>
                 <img
                 alt="#"
-                src=""
+                src={logo}
                 width="30"
                 height="30"
                 className="d-inline-block align-top"

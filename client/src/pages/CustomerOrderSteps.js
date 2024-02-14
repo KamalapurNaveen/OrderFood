@@ -40,7 +40,7 @@ const orderFoodSteps = [
   },
   {
     step: 6,
-    title: "QR Code Scanned by Canteen",
+    title: "QR Code Scanned by Canteener",
     text: "Present your QR code at the canteen counter for order verification. Our staff will quickly scan your code to confirm your order details.",
     image: scanner
   },

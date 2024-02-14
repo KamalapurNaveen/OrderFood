@@ -43,7 +43,21 @@ async function getProfileInfo({id, CustomerModel}){
     const {_id, email, name }  = await EmployeeModel.findById(id)
     return {id, email, name};
 }
+async function getCustomerById({id, CustomerModel}){
+    const {_id, email, name, wallet_id}  = await CustomerModel.findById(id)
+    return {id, email, name, wallet_id};
+}
+async function addMoneyToWallet({wallet_id,amount, WalletModel}){
+    const wallet   = await WalletModel.findById(wallet_id)
+    wallet.balance += amount;
+    wallet.transactions.push({
+        type: 'credit',
+        amount: amount,
+        message: `Recharged wallet with ₹${amount}`,
+    });
+    await wallet.save();
+}
 
 module.exports = {
-    registerEmployee, loginEmployee, logoutEmployee,getProfileInfo
+    registerEmployee, loginEmployee, logoutEmployee,getProfileInfo,getCustomerById,addMoneyToWallet
 }

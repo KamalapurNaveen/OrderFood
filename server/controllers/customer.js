@@ -114,6 +114,16 @@ async function getUserInfo(req,res){
     }
 }
 
+async function getInfoById(){
+    try {
+        const id = req.query.id
+        const info = await customerInteractor.getInfoById({id, CustomerModel})
+        res.status(200).send({success : true, info })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
 async function updatePassword(req, res){
     try{
         const id = req.sessionData.id
@@ -168,5 +178,6 @@ module.exports = {
     getHistory,
     getTransactions,
     getUserInfo,
+    getInfoById,
     updatePassword,
 }

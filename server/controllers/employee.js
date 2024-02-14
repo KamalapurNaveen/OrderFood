@@ -1,4 +1,4 @@
-const { EmployeeModel, ItemModel, OrderModel } = require("../models")
+const { EmployeeModel, ItemModel, OrderModel,CustomerModel ,WalletModel} = require("../models")
 const auth = require("../services/auth.service")
 const employeeInteractor  = require("../interactors/employee")
 const itemInteractor = require("../interactors/item")
@@ -54,6 +54,26 @@ async function getAllItems(req,res){
     }
 }
 
+async function getCustomerById(req,res){
+    try {
+        const id = req.query.id
+        const info = await employeeInteractor.getCustomerById({id, CustomerModel})
+        res.status(200).send({success : true, data:info })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+async function addMoneyToWallet(req,res){
+    try {
+        const wallet_id = req.query.id
+        const amount=req.query.amount;
+         await employeeInteractor.addMoneyToWallet({wallet_id, amount,WalletModel})
+        res.status(200).send({success : true, message : "Amount added successfully"})
+    }catch(err){
+        console.log(err)
+        res.status(500).send({success : false, message : err.message})
+    }
+}
 
 async function addItems(req, res){
     try{
@@ -144,6 +164,8 @@ module.exports = {
     login, 
     logout,
     getUserInfo,
+    getCustomerById,
+    addMoneyToWallet,
     addItems,
     getAllItems,
     deleteItem,

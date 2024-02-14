@@ -42,6 +42,10 @@ async function getProfileInfo({id, CustomerModel}){
     const {_id, email, name, mobile}  = await CustomerModel.findById(id)
     return {id, email, name, mobile};
 }
+async function getInfoById({id, CustomerModel}){
+    const {_id, email, name, wallet_id}  = await CustomerModel.findById(id)
+    return {id, email, name, wallet_id};
+}
 
 async function updatePassword({id, currentPassword, newPassword, CustomerModel, auth}){
     var user = await CustomerModel.findById(id);
@@ -100,6 +104,7 @@ module.exports = {
     loginCustomer, 
     logoutCustomer, 
     getProfileInfo, 
+    getInfoById,
     updatePassword,
     sendOTP,
     verifyOTP,
