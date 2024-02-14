@@ -47,7 +47,6 @@ const Dashboard = () => {
             <Nav className="mr-auto">
               <Nav.Link href="#scanner" onClick={() => handleTabClick('scanner')} className={activeTab === 'scanner' ? 'active' : ''}>Scanner</Nav.Link>
               <Nav.Link href="#menu" onClick={() => handleTabClick('menu')} className={activeTab === 'menu' ? 'active' : ''}>Menu</Nav.Link>
-              <Nav.Link href="#wallet" onClick={() => handleTabClick('wallet')} className={activeTab === 'wallet' ? 'active' : ''}>Wallet</Nav.Link>
               <Nav.Link href="#orders" onClick={() => handleTabClick('orders')} className={activeTab === 'orders' ? 'active' : ''}>Orders</Nav.Link>
               <Nav.Link href="#profile" onClick={() => handleTabClick('profile')} className={activeTab === 'profile' ? 'active' : ''}>Profile</Nav.Link>
             </Nav>
@@ -58,7 +57,7 @@ const Dashboard = () => {
       <Container className="mt-4" style={{minHeight : "90vh"}}>
         {activeTab === 'scanner' && <Scanner />}
         {activeTab === 'menu' && <ManageMenu />}
-        {activeTab === 'wallet' && <Wallet />}
+  
         {activeTab === 'orders' && <Orders />}
         {activeTab === 'profile' && <Profile />}
         {/* Add similar content for other tabs */}

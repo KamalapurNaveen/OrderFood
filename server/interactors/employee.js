@@ -49,7 +49,8 @@ async function getCustomerById({id, CustomerModel}){
 }
 async function addMoneyToWallet({wallet_id,amount, WalletModel}){
     const wallet   = await WalletModel.findById(wallet_id)
-    wallet.balance += amount;
+    const updateDatedAmount=Number(wallet.balance) + Number(amount);
+    wallet.balance =updateDatedAmount;
     wallet.transactions.push({
         type: 'credit',
         amount: amount,

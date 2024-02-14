@@ -29,7 +29,6 @@ async function customerLogin(req, res){
         res.status(200).send({success : true, message : "Authorized"})
     } catch(err) {
         var statusCode = 500
-        console.log(err.message, req.body)
         if (err.message === 'invalid email' || err.message === 'invalid password') {
             statusCode =  401
         }
@@ -66,7 +65,6 @@ async function addOrder(req,res){
         const walletStatus = await orderIntractor.addCustomerOrder({order, walletId,userId, userName,  OrderModel, WalletModel})
         res.status(200).send({success : true, data: {walletStatus}})
     }catch(err){
-        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }
 }
@@ -79,7 +77,6 @@ async function cancelOrder(req, res){
         const response = await orderIntractor.cancelCustomerOrder({orderId, walletId, WalletModel, OrderModel})
         res.status(200).send(response)
     }catch(err){
-        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }
 }
@@ -141,7 +138,6 @@ async function customerForgotPasswordSendOTP(req, res){
         const hash = await customerInteractor.sendOTP({email, CustomerModel, mail})
         res.status(200).send({success : true, hash })        
     }catch(err){
-        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }
 }
@@ -159,7 +155,7 @@ async function customerForgotPasswordVerifyOTP(req, res){
 async function customerForgotPasswordUpdate(req, res){
     try{
         const {password, hash, email, otp} = {...req.body}
-        const response = await customerInteractor.updatePassword({password, hash, email, otp, CustomerModel, mail, auth})
+        const response = await customerInteractor.updateOTPPassword({password, hash, email, otp, CustomerModel, mail, auth})
         res.status(200).send({success : true, data : response })        
     }catch(err){
         res.status(500).send({success : false, message : err.message})

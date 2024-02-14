@@ -87,7 +87,7 @@ async function verifyOTP({otp, hash, email, mail}){
     }
 }
 
-async function updatePassword({password, hash, email, otp, CustomerModel, mail, auth}){
+async function updateOTPPassword({password, hash, email, otp, CustomerModel, mail, auth}){
     const valid = await mail.verifyHash({ otp, email, hash })
     if(!valid){
         throw Error('something went wrong')
@@ -107,5 +107,5 @@ module.exports = {
     updatePassword,
     sendOTP,
     verifyOTP,
-    updatePassword,
+    updateOTPPassword,
 }

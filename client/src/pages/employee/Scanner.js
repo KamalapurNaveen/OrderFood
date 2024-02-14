@@ -128,7 +128,68 @@ const Scanner = () => {
     // Show the scanner
     setScannerVisible(true);
   };
-
+  
+  const handleCancelOrder = async (orderId) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/_e/order`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "order":{
+             _id: orderId,
+             status:"cancelled"
+          }
+        }),
+        credentials: 'include',
+      });
+      const resData = await response.json();
+      console.log(resData);
+      if (resData.success) {
+        console.log('Order cancelled successfully');
+        message.success("Order cancelled successfully")
+      } else {
+        message.error("status is not ok")
+        console.error('Failed to cancel order:', response.statusText);
+      }
+    } catch (error) {
+      message.error("Error cancelling order, 500")
+      console.error('Error cancelling order:', error);
+    }
+    handleModalClose();
+  };
+  
+  const handleDeliverOrder = async (orderId) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/_e/order`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "order":{
+             _id: orderId,
+             status:"delivered"
+          }
+        }),
+        credentials: 'include',
+      });
+      const resData = await response.json();
+      console.log(resData);
+      if (resData.success) {
+        console.log('Order delivered successfully');
+        message.success("Order delivered successfully")
+      } else {
+        message.error("status is not ok")
+        console.error('Failed to deliver order:', response.statusText);
+      }
+    } catch (error) {
+      message.error("Error delivering order, 500")
+      console.error('Error delivering order:', error);
+    }
+    handleModalClose();
+  };
   return (
     <>
       <Row justify="center" align="middle" className="mt-4" style={{ height: 'calc(100vh - 64px)' }}>
@@ -149,10 +210,17 @@ const Scanner = () => {
         title="Order Details"
         visible={showOrderModal}
         onCancel={handleModalClose}
-        footer={[
+        footer={orderData && (orderData.status === 'delivered' || orderData.status === 'cancelled' )? [
           <Button key="close" onClick={handleModalClose}>
             Close
           </Button>
+        ] : [
+          <Button key="cancel" onClick={() => handleCancelOrder(orderData._id)}>
+            Cancel
+          </Button>,
+          <Button key="delivered" type="primary" onClick={() => handleDeliverOrder(orderData._id)}>
+            Delivered
+          </Button>,
         ]}
         centered
         maskClosable={false}
