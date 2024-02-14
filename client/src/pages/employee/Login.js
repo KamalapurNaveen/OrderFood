@@ -3,36 +3,37 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-import logoImage from "../userLogo.png"
+import logoImage from "../userLogo.png";
+import backgroundImage from '../logo6.jpg'; // Import your background image
+
 const Login = () => {
   const navigate = useNavigate();
-  const {login} =useAuth();
+  const { login } = useAuth();
+
   const onFinish = async (values) => {
     try {
-      var response = await fetch("http://localhost:3500/api/_e/auth/login", {
+      const response = await fetch("http://localhost:3500/api/_e/auth/login", {
         method: "post",
         body: JSON.stringify(values),
         headers: {
           "Content-Type": "application/json"
         },
         credentials: "include"
-      })
-      var data = await response.json()
-      if(data.success) {
-        login('employee')
-        navigate("/employee/dashboard")
+      });
+      const data = await response.json();
+      if (data.success) {
+        login('employee');
+        navigate("/employee/dashboard");
       }
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   };
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center vh-100 ">
-      <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded" >
-      <div className="text-center mb-4">
-          <img src={logoImage} alt="Logo" className="img-fluid"  />
-        </div>
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded" style={{backgroundColor: 'rgba(255, 255, 255, 0.65)'}}>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h2>
         <Form
           name="normal_login"
           className="login-form"
@@ -68,11 +69,9 @@ const Login = () => {
             />
           </Form.Item>
           <Form.Item className="text-center">
-            <Button type="primary" htmlType="submit" className="login-form-button">
+            <Button type="primary" htmlType="submit" className="login-form-button" >
               Log in
             </Button>
-            {"\n"}
-            {"      \t\t"}Or <a href="/customer/signup"> {"\t\t"}<span>Register now!</span></a>
           </Form.Item>
         </Form>
       </div>
