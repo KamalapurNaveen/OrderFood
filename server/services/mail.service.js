@@ -27,6 +27,7 @@ async function sendMail({email, otp}){
     }
 }
 
+
 async function createHash({ otp, email }){ 
     return crypto.createHmac('sha256', key).update(`${otp}:${email}`).digest('hex')
 }

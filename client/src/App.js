@@ -13,6 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import CustomerForgotPassword from './pages/customer/ForgotPassword';
 import EmployeeForgotPassword from './pages/employee/ForgotPassword';
 import Unauthorized from './Unauthorized';
+import { EmployeeNavProvider } from './pages/employee/NavContext';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             <Route path="/customer" element={<PrivateRoute Component={CustomerNavProvider} role="customer" />} />
             <Route path="/employee/signin" element={< EmployeeLogin />} />
             <Route path="/employee/forgotpassword" element={< EmployeeForgotPassword/>} />
-            <Route path="/employee/dashboard" element={<PrivateRoute Component={EmployeeDashboard} role="employee" />} />
+            <Route path="/employee/dashboard" element={<PrivateRoute Component={EmployeeNavProvider} role="employee" />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<ErrorPage/>}/>
           </Routes>

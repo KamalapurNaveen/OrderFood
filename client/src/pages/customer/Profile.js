@@ -45,6 +45,7 @@ export default function Profile(){
                     form.resetFields()
                     setVisible(false)
                 }else{
+                    message.error(data.message)
                     throw Error(data.message)
                 }
             })

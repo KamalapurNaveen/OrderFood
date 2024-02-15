@@ -133,11 +133,13 @@ async function updatePassword(req, res){
 }
 
 async function customerForgotPasswordSendOTP(req, res){
+   
     try{
         const email = req.query.email
         const hash = await customerInteractor.sendOTP({email, CustomerModel, mail})
         res.status(200).send({success : true, hash })        
     }catch(err){
+        console.log(err);
         res.status(500).send({success : false, message : err.message})
     }
 }

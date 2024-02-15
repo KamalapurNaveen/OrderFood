@@ -3,6 +3,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const cors = require('cors');
+const morgan = require('morgan');
 
 const PORT = require("./config").PORT
 const MONGO_URL = require("./config").MONGO_URL
@@ -21,6 +22,7 @@ const corsOptions = {
 
 app.use(cookieParser())
 app.use(cors(corsOptions));  
+app.use(morgan('dev'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
