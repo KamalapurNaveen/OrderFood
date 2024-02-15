@@ -1,6 +1,8 @@
 const { EmployeeModel, ItemModel, OrderModel, CustomerModel, WalletModel } = require("../models")
 
 const auth = require("../services/auth.service")
+const mail = require("../services/mail.service")
+
 const storage = require('../services/storage.service')
 const employeeInteractor  = require("../interactors/employee")
 const itemInteractor = require("../interactors/item")
@@ -162,6 +164,36 @@ async function getQueueStats(req, res){
     }
 }
 
+async function employeeForgotPasswordSendOTP(req, res){
+    try{
+        const email = req.query.email
+        const hash = await employeeInteractor.sendOTP({email, EmployeeModel, mail})
+        res.status(200).send({success : true, hash })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
+async function employeeForgotPasswordVerifyOTP(req, res){
+    try{
+        const {otp, hash, email} = {...req.query}
+        const response = await employeeInteractor.verifyOTP({otp, hash, email, mail})
+        res.status(200).send({success : true, data : response })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }   
+}
+
+async function employeeForgotPasswordUpdate(req, res){
+    try{
+        const {password, hash, email, otp} = {...req.body}
+        const response = await employeeInteractor.updateOTPPassword({password, hash, email, otp, EmployeeModel, mail, auth})
+        res.status(200).send({success : true, data : response })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }   
+}
+
 module.exports = {
     signup, 
     login, 
@@ -179,4 +211,7 @@ module.exports = {
     getOrderHistory,
     getOrderQueue,
     getQueueStats,
+    employeeForgotPasswordSendOTP,
+    employeeForgotPasswordVerifyOTP,
+    employeeForgotPasswordUpdate,
 }
