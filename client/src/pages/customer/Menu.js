@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Item  from "./components/ItemCard";
+import API_LINK from '../../util/api.link'
 
 const Menu = () => {
     const [items, setItems] = useState([]);
@@ -8,7 +9,7 @@ const Menu = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await fetch("http://localhost:3500/api/_c/item",{ 
+                const response = await fetch(`${API_LINK}/api/_c/item`,{ 
                     credentials: 'include',
                     
                 });

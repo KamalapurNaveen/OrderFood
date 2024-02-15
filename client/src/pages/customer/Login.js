@@ -3,8 +3,9 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-import backgroundImage from '../assets/logo6.jpg'
 
+import API_LINK from '../../util/api.link'
+import backgroundImage from '../assets/logo6.jpg'
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -12,7 +13,7 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      var response = await fetch("http://localhost:3500/api/_c/auth/login", {
+      var response = await fetch(`${API_LINK}/api/_c/auth/login`, {
         method: "post",
         body: JSON.stringify(values),
         headers: {

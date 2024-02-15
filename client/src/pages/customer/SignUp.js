@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../assets/logo6.jpg'
+import API_LINK from '../../util/api.link'
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Signup = () => {
   const onFinish = async (values) => {
     console.log('Received values:', values);
     try {
-      const response = await fetch("http://127.0.0.1:3500/api/_c/auth/signup", {
+      const response = await fetch(`${API_LINK}/api/_c/auth/signup`, {
         method: "post",
         body: JSON.stringify({
           name: values.fullName,
