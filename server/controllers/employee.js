@@ -26,6 +26,7 @@ async function login(req, res){
         setCookie(res)
         res.status(200).send({success : true, message : "Authorized"})
     } catch(err) {
+        console.log(err)
         res.status(500).send({success : false, message : err.message})
     }    
 }   

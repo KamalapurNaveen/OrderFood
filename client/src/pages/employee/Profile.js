@@ -4,6 +4,7 @@ import { Avatar, Button, Card, message, Form, Input } from 'antd';
 import  { useAuth } from './../../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import CustomModel from '../customer/components/CustomModel';
+import API_LINK from '../../util/api.link'
 const { Meta } = Card;
 
 export default function Profile(){
@@ -19,7 +20,7 @@ export default function Profile(){
     const [visible, setVisible] = useState(false)
 
     React.useEffect(()=>{
-        fetch('http://localhost:3500/api/_e/profile', {credentials : "include"})
+        fetch(`${API_LINK}/api/_e/profile`, {credentials : "include"})
         .then(resp => resp.json())
         .then(data => setInfo(data.info))
         .catch(error => console.log(error))
@@ -35,7 +36,7 @@ export default function Profile(){
             message.error('The new password must match the re-entered password.')
         }else{
             delete values.confirmNewPassword
-            fetch('http://localhost:3500/api/_e/profile/update_password', {
+            fetch(`${API_LINK}/api/_e/profile/update_password`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body : JSON.stringify(values),

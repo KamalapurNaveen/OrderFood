@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import logoImage from "../userLogo.png";
 import backgroundImage from '../logo6.jpg'; // Import your background image
+import API_LINK from '../../util/api.link'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch("http://localhost:3500/api/_e/auth/login", {
+      const response = await fetch(`${API_LINK}/api/_e/auth/login`, {
         method: "post",
         body: JSON.stringify(values),
         headers: {

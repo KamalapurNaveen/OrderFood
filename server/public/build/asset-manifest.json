@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2e7ff526.css",
+    "main.js": "/static/js/main.4c6387e7.js",
+    "static/media/logo6.jpg": "/static/media/logo6.5b7e827deb0bccbeea14.jpg",
+    "static/media/logo7.jpg": "/static/media/logo7.207e9e45e59a9f448f20.jpg",
+    "static/media/spoons.png": "/static/media/spoons.e53f9be71ff1f0e99493.png",
+    "static/media/menu.png": "/static/media/menu.8f5ac1124ebc1ecb19fc.png",
+    "static/media/eat.png": "/static/media/eat.a767a341f11607964d1b.png",
+    "static/media/cart.png": "/static/media/cart.48640258fae13e6d24e6.png",
+    "static/media/logon.png": "/static/media/logon.564fd1d33d168a7ddac9.png",
+    "static/media/qr.png": "/static/media/qr.cfab7254f7bb2e48a054.png",
+    "static/media/payment.png": "/static/media/payment.df7acf37a1dbc4bad080.png",
+    "static/media/wallet.png": "/static/media/wallet.ba5801204fef624f0e33.png",
+    "static/media/scanner.png": "/static/media/scanner.6c5ec8d4f77ec0edf87a.png",
+    "static/media/signin.png": "/static/media/signin.d605d13f6a549af5ef7d.png",
+    "static/media/signup.png": "/static/media/signup.d0a0389ead5a1feebe54.png",
+    "static/media/history.png": "/static/media/history.7b8c975ccd86cf8edd08.png",
+    "index.html": "/index.html",
+    "main.2e7ff526.css.map": "/static/css/main.2e7ff526.css.map",
+    "main.4c6387e7.js.map": "/static/js/main.4c6387e7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2e7ff526.css",
+    "static/js/main.4c6387e7.js"
+  ]
+}

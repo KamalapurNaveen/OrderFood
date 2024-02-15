@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Row, Col, Modal, Button, Input, message } from 'antd';
+import API_LINK from '../../util/api.link'
 
 const Wallet = () => {
   const [userData, setUserData] = useState(null);
@@ -42,7 +43,7 @@ const Wallet = () => {
 
   const fetchUserData = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/user?id=${userId}`, { credentials: 'include' });
+      const response = await fetch(`${API_LINK}/api/_e/user?id=${userId}`, { credentials: 'include' });
       const resData = await response.json();
       setUserData(resData.data["user"]);
       setShowModal(true);
@@ -65,7 +66,7 @@ const Wallet = () => {
 
   const handleAddMoney = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/wallet`, {
+      const response = await fetch(`${API_LINK}/api/_e/wallet`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

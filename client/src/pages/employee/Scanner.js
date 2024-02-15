@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QrReader from 'react-qr-scanner';
 import { Row, Col, Modal, Button, Tag, message ,Input} from 'antd';
+import API_LINK from '../../util/api.link'
 
 const Scanner = () => {
   const [result, setResult] = useState('');
@@ -35,7 +36,7 @@ const Scanner = () => {
 
   const handleOrderScan = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/order?id=${orderId}`, { credentials: "include" });
+      const response = await fetch(`${API_LINK}/api/_e/order?id=${orderId}`, { credentials: "include" });
       const resData = await response.json();
       setOrderData(resData.data["order"]);
       setShowOrderModal(true);
@@ -52,7 +53,7 @@ const Scanner = () => {
 
   const fetchUserData = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/profile/customer?id=${userId}`, { credentials: 'include' });
+      const response = await fetch(`${API_LINK}/api/_e/profile/customer?id=${userId}`, { credentials: 'include' });
       const resData = await response.json();
       console.log(resData);
       setUserData(resData.data);
@@ -79,7 +80,7 @@ const Scanner = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/profile/customer/wallet?wallet_id=${wallet_id}&amount=${amountToAdd}&otp=${otp}`, {
+      const response = await fetch(`${API_LINK}/api/_e/profile/customer/wallet?wallet_id=${wallet_id}&amount=${amountToAdd}&otp=${otp}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -141,7 +142,7 @@ const Scanner = () => {
   
   const handleCancelOrder = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/order`, {
+      const response = await fetch(`${API_LINK}/api/_e/order`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -171,7 +172,7 @@ const Scanner = () => {
   
   const handleDeliverOrder = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/order`, {
+      const response = await fetch(`${API_LINK}/api/_e/order`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

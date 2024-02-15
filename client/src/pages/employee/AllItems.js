@@ -2,13 +2,15 @@ import React, { useEffect } from 'react';
 import CardItem from './CardItem';
 import { useState } from 'react';
 import { message } from 'antd';
+import API_LINK from '../../util/api.link'
+
 const AllItems = () => {
   const [items, setItems] = useState([]);
   const [itemModified,setItemModified]=useState(false)
   useEffect(() => {
     const fetchItems = async () => {
         try {
-            const response = await fetch("http://localhost:3500/api/_e/item",{credentials: "include"});
+            const response = await fetch(`${API_LINK}/api/_e/item`,{credentials: "include"});
             const resData = await response.json();
             setItems(resData.data.items);
         } catch (error) {
@@ -22,7 +24,7 @@ const AllItems = () => {
     setItemModified(!itemModified)
     try {
       const itemId=item._id;
-      const response = await fetch(`http://localhost:3500/api/_e/item`, {
+      const response = await fetch(`${API_LINK}/api/_e/item`, {
         method: 'PUT', // Assuming you are using a PUT request to mark the order as delivered
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +57,7 @@ const AllItems = () => {
     setItemModified(!itemModified)
     try {
       const itemId=item._id;
-      const response = await fetch(`http://localhost:3500/api/_e/item/delete?id=${itemId}`, { credentials: 'include',});
+      const response = await fetch(`${API_LINK}/api/_e/item/delete?id=${itemId}`, { credentials: 'include',});
       const resData=await response.json();
       console.log(resData);
       if (resData.success) {

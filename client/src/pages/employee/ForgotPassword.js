@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LockOutlined, UserOutlined, MobileOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import API_LINK from '../../util/api.link'
 
 function EmailForm({ onFinish }) {
     return (
@@ -125,7 +126,7 @@ const ForgotPassword = () => {
 
     const sendOTP = async (values) => {
         try {
-            const response = await fetch(`http://localhost:3500/api/_e/auth/forgot_password_send_otp?email=${values.email}`, { credentials: 'include' });
+            const response = await fetch(`${API_LINK}/api/_e/auth/forgot_password_send_otp?email=${values.email}`, { credentials: 'include' });
             const data = await response.json();
             if (data.success) {
                 setEmail(values.email)
