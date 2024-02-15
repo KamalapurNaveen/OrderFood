@@ -43,10 +43,12 @@ async function getProfileInfo({id, CustomerModel}){
     const {_id, email, name }  = await EmployeeModel.findById(id)
     return {id, email, name};
 }
+
 async function getCustomerById({id, CustomerModel}){
     const {_id, email, name, wallet_id}  = await CustomerModel.findById(id)
     return {id, email, name, wallet_id};
 }
+
 async function addMoneyToWallet({wallet_id,amount, WalletModel}){
     const wallet   = await WalletModel.findById(wallet_id)
     const updateDatedAmount=Number(wallet.balance) + Number(amount);
@@ -59,6 +61,46 @@ async function addMoneyToWallet({wallet_id,amount, WalletModel}){
     await wallet.save();
 }
 
+async function sendOTP({email, EmployeeModel, mail}){
+    var user = await EmployeeModel.findOne({email});
+    if(!user){
+        throw new Error('invalid email')
+    }else {
+        const otp = Math.floor(100000 + Math.random() * 900000)
+        mail.sendMail({ email, otp})
+        const hash = await mail.createHash({otp, email})
+        return hash
+    }
+}
+
+async function verifyOTP({otp, hash, email, mail}){
+    const valid = await mail.verifyHash({ otp, email, hash })
+    if(!valid){
+        throw Error('invalid OTP')
+    }else{
+        return true
+    }
+}
+
+async function updateOTPPassword({password, hash, email, otp, EmployeeModel, mail, auth}){
+    const valid = await mail.verifyHash({ otp, email, hash })
+    if(!valid){
+        throw Error('something went wrong')
+    }else{
+        var user = await EmployeeModel.findOne({email}, {});
+        var credentials  = await auth.createHash({ password  })
+        await EmployeeModel.updateOne({_id : user._id}, {...credentials})
+    }
+}
+
 module.exports = {
-    registerEmployee, loginEmployee, logoutEmployee,getProfileInfo,getCustomerById,addMoneyToWallet
+    registerEmployee, 
+    loginEmployee, 
+    logoutEmployee,
+    getProfileInfo,
+    getCustomerById,
+    addMoneyToWallet,
+    sendOTP,
+    verifyOTP,
+    updateOTPPassword,
 }

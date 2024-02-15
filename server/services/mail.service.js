@@ -20,6 +20,7 @@ async function sendMail({email, otp}){
             subject: "Password Change OTP",
             text: `The OTP for changing your password is : ${otp}`,
         }).then(data =>{
+            console.log(`MailSent -  to:${email} otp:${otp}`)
         })
     }catch(err){
         throw err
