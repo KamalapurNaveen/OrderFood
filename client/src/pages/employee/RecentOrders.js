@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Typography, Statistic, Divider, List, Avatar } from 'antd';
 import DropdownItems from './DropdownItems';
+import API_LINK from '../../util/api.link'
 import './card.css';
 
 const { Text, Title } = Typography;
@@ -11,7 +12,7 @@ const RecentOrders = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3500/api/_e/order/history", { credentials: "include" });
+        const response = await fetch(`${API_LINK}/api/_e/order/history`, { credentials: "include" });
         const resData = await response.json();
         setRecentOrders(resData.data.orders);
 
@@ -36,7 +37,7 @@ const RecentOrders = () => {
 
   const getImageForItem = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/item/id?id=${itemId}`, { credentials: "include" });
+      const response = await fetch(`${API_LINK}/api/_e/item/id?id=${itemId}`, { credentials: "include" });
       const resData = await response.json();
       return resData.data.image;
     } catch (error) {

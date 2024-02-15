@@ -1,12 +1,14 @@
 import React from 'react';
 import CardItem from './CardItem';
 import { useState,useEffect } from 'react';
+import API_LINK from '../../util/api.link'
+
 const AvailableItems = () => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     const fetchItems = async () => {
         try {
-            const response = await fetch("http://localhost:3500/api/_e/item", {credentials: "include"});
+            const response = await fetch(`${API_LINK}/api/_e/item`, {credentials: "include"});
             const resData = await response.json();
             setItems(resData.data.items);
         } catch (error) {

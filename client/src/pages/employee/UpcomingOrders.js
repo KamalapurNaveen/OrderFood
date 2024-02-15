@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Avatar, Typography, Statistic, Divider, List } from 'antd';
 import './card.css'; // Assuming you have defined the 'cardh' class in this CSS file
 import DropdownItems from './DropdownItems';
+import API_LINK from '../../util/api.link'
 
 const { Text, Title } = Typography;
 
@@ -10,7 +11,7 @@ const UpcomingOrders = () => {
   const [itemImages, setItemImages] = useState({});
 
   useEffect(()=>{
-    fetch('http://localhost:3500/api/_e/order/queue/stats', {credentials : 'include'})
+    fetch(`${API_LINK}/api/_e/order/queue/stats`, {credentials : 'include'})
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))
@@ -19,7 +20,7 @@ const UpcomingOrders = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3500/api/_e/order/queue", { credentials: "include" });
+        const response = await fetch(`${API_LINK}/api/_e/order/queue`, { credentials: "include" });
         const resData = await response.json();
         setUpcomingOrders(resData.data.orders);
 
@@ -44,7 +45,7 @@ const UpcomingOrders = () => {
 
   const getImageForItem = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/item/id?id=${itemId}`, { credentials: "include" });
+      const response = await fetch(`${API_LINK}/api/_e/item/id?id=${itemId}`, { credentials: "include" });
       const resData = await response.json();
       return resData.data.image;
     } catch (error) {

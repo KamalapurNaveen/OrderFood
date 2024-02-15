@@ -4,6 +4,7 @@ import { Button, Card, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import backgroundImage from '../logo6.jpg'; // Import your background image
+import API_LINK from '../../util/api.link'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      var response = await fetch("http://localhost:3500/api/_c/auth/login", {
+      var response = await fetch(`${API_LINK}/api/_c/auth/login`, {
         method: "post",
         body: JSON.stringify(values),
         headers: {

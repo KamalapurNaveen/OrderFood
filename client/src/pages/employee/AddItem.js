@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { message } from 'antd';
+import API_LINK from '../../util/api.link'
 
 const AddItem = () => {
     function isNotNull(input) {
@@ -63,7 +64,7 @@ const AddItem = () => {
 
         const addItem = async (formData) => {
             try {
-                const response = await fetch("http://localhost:3500/api/_e/item/add", {
+                const response = await fetch(`${API_LINK}/api/_e/item/add`, {
                     method: "POST",
                     body: formData,
                     credentials: "include",

@@ -6,6 +6,7 @@ import CartList from "./components/CartList"
 import BillCard from "./components/BillCard"
 import CustomModel from './components/CustomModel';
 import OrderStatus from  './components/OrderStatus'
+import API_LINK from '../../util/api.link'
 
 function parseOrderData(jsonData) {
     const orderItems = Object.keys(jsonData).map(itemId => {
@@ -64,7 +65,7 @@ export default function Cart() {
             credentials: "include"
         };
 
-        await fetch("http://localhost:3500/api/_c/order/add", requestOptions)
+        await fetch(`${API_LINK}/api/_c/order/add`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result.data.walletStatus.balanceAvailable == false) {

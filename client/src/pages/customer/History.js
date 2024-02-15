@@ -3,6 +3,7 @@ import { List, Tag, Typography, Button, Space, message } from 'antd';
 import { QrcodeOutlined, DeleteOutlined } from '@ant-design/icons';
 import CustomModel from './components/CustomModel';
 import QRCode from 'qrcode.react';
+import API_LINK from '../../util/api.link'
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -17,7 +18,7 @@ const OrderHistory = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:3500/api/_c/order/history", { credentials: "include" });
+      const response = await fetch(`${API_LINK}/api/_c/order/history`, { credentials: "include" });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -43,7 +44,7 @@ const OrderHistory = () => {
   };
 
   const handleCancelOrder = (orderId) => {
-    fetch(`http://localhost:3500/api/_c/order/cancel?orderId=${orderId}`, { credentials: "include" })
+    fetch(`${API_LINK}/api/_c/order/cancel?orderId=${orderId}`, { credentials: "include" })
     .then(res => res.json())
     .then(data => {
       fetchOrders();

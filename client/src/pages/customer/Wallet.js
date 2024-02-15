@@ -4,6 +4,7 @@ import { useState } from "react";
 import QRCode from 'qrcode.react';
 import CustomModel from './components/CustomModel';
 import { QrcodeOutlined, DeleteOutlined } from '@ant-design/icons';
+import API_LINK from '../../util/api.link'
 
 export default function Wallet(){
     const [transactions, setTransactions] = React.useState([]);
@@ -13,7 +14,7 @@ export default function Wallet(){
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [userId,setUserId] =useState(null);
     React.useEffect(()=>{
-        fetch('http://localhost:3500/api/_c/wallet/transactions',{ 
+        fetch(`${API_LINK}3500/api/_c/wallet/transactions`,{ 
             credentials: 'include',
             
         })
@@ -26,7 +27,7 @@ export default function Wallet(){
 
         // api call to get UserId
 
-        fetch('http://localhost:3500/api/_c/profile', {credentials : "include"})
+        fetch(`${API_LINK}/api/_c/profile`, {credentials : "include"})
         .then(resp => resp.json())
         .then(data => setUserId(data.info.id))
         .catch(error => console.log(error))
