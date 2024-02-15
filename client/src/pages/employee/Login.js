@@ -3,8 +3,8 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-import logoImage from "../userLogo.png";
-
+import backgroundImage from "../assets/logo6.jpg"
+import API_LINK from '../../util/api.link'
 
 const Login = () => {
   const navigate = useNavigate();
