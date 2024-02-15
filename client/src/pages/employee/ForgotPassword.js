@@ -125,7 +125,7 @@ const ForgotPassword = () => {
 
     const sendOTP = async (values) => {
         try {
-            const response = await fetch(`http://localhost:3500/api/_c/auth/forgot_password_send_otp?email=${values.email}`, { credentials: 'include' });
+            const response = await fetch(`http://localhost:3500/api/_e/auth/forgot_password_send_otp?email=${values.email}`, { credentials: 'include' });
             const data = await response.json();
             if (data.success) {
                 setEmail(values.email)
@@ -141,7 +141,7 @@ const ForgotPassword = () => {
 
     const verifyOTP = async (values) => {
         try {
-            const response = await fetch(`http://localhost:3500/api/_c/auth/forgot_password_verify_otp?email=${email}&otp=${values.otp}&hash=${hash}`, { credentials: 'include' });
+            const response = await fetch(`http://localhost:3500/api/_e/auth/forgot_password_verify_otp?email=${email}&otp=${values.otp}&hash=${hash}`, { credentials: 'include' });
             const data = await response.json();
             if (data.success) {
                 setOTP(values.otp)
@@ -157,7 +157,7 @@ const ForgotPassword = () => {
     const setPassword = async (values) => {
         try {
             console.log({ hash, email, otp : OTP, password : values.password })
-            const response = await fetch(`http://localhost:3500/api/_c/auth/forgot_password_update`, {
+            const response = await fetch(`http://localhost:3500/api/_e/auth/forgot_password_update`, {
                     method: "PUT",
                     body: JSON.stringify({ hash, email, otp : OTP, password : values.password }),
                     headers: {
@@ -167,7 +167,7 @@ const ForgotPassword = () => {
                 });
             const data = await response.json();
             if (data.success) {
-                navigate('/customer/signin')
+                navigate('/employee/signin')
             } else {
                 console.error(data.error); 
             }
