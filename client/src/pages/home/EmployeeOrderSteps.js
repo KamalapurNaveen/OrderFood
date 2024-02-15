@@ -1,12 +1,12 @@
 import React from 'react';
 import ResponsiveComponent from './ResponsiveComponent'; // Import the ResponsiveComponent
-import eatImage from './eat.png'; 
-import wallet from './wallet.png';
-import scanner from "./scanner.png"
-import menu from "./menu.png"
-import signin from "./signin.png"
-import addItem from "./additem.png"
-import history from "./history.png"
+import eatImage from '../assets/eat.png'; 
+import wallet from '../assets/wallet.png';
+import scanner from "../assets/scanner.png"
+import menu from "../assets/menu.png"
+import signin from "../assets/signin.png"
+import addItem from "../assets/additem.png"
+import history from "../assets/history.png"
 // Your array of employee order steps
 const employeeOrderSteps = [
   {

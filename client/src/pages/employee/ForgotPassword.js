@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { LockOutlined, UserOutlined, MobileOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input,message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
+import backgroundImage from '../assets/logo6.jpg'; 
 function EmailForm({ onFinish }) {
     return (
-        <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+        <div className="container-fluid d-flex align-items-center justify-content-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.9' }}>
             <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded">
                 <div className="mb-3">
                     <h6>Please provide the email address.</h6>
@@ -39,7 +39,7 @@ function EmailForm({ onFinish }) {
 
 function OTPForm({ onFinish }) {
     return (
-        <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+        <div className="container-fluid d-flex align-items-center justify-content-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.9' }}>
             <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded">
                 <div className="mb-3">
                     <h6>Enter OTP sent to your email.</h6>
@@ -73,7 +73,7 @@ function OTPForm({ onFinish }) {
 
 function NewPasswordForm({ onFinish }) {
     return (
-        <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+        <div className="container-fluid d-flex align-items-center justify-content-center vh-100 " style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.9' }}>
             <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded">
                 <div className="mb-3">
                     <h6>Set new password</h6>
@@ -131,7 +131,9 @@ const ForgotPassword = () => {
                 setEmail(values.email)
                 setHash(data.hash)
                 setActiveForm('otp');
+                message.success(`OTP sent to ${values.email}`)
             } else {
+                message.error(data.message);
                 console.error(data.error); 
             }
         } catch (err) {
@@ -146,7 +148,9 @@ const ForgotPassword = () => {
             if (data.success) {
                 setOTP(values.otp)
                 setActiveForm('password');
+                message.success('OTP Verified Successfully')
             } else {
+                message.error(data.message)
                 console.error(data.error); 
             }
         } catch (err) {
@@ -168,7 +172,9 @@ const ForgotPassword = () => {
             const data = await response.json();
             if (data.success) {
                 navigate('/employee/signin')
+                message.success('Password Changed Successfully')
             } else {
+                message.error(data.message)
                 console.error(data.error); 
             }
         } catch (err) {

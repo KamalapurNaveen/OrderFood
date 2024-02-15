@@ -24,7 +24,7 @@ const Orders = () => {
     setActiveTabKey1(key);
   };
   return (
-    <>
+    <div className='container'>
       <Card
         style={{
           width: '100%',
@@ -36,7 +36,7 @@ const Orders = () => {
         {contentList[activeTabKey1]}
       </Card>
      
-    </>
+    </div>
   );
 };
 export default Orders;

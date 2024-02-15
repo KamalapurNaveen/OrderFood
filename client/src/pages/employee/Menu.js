@@ -40,7 +40,7 @@ const Menu = () => {
   };
  
   return (
-    <>
+    < div className='container'>
     
         
       <Card
@@ -56,7 +56,7 @@ const Menu = () => {
       </Card>
     
      
-    </>
+    </div>
   );
 };
 export default Menu;

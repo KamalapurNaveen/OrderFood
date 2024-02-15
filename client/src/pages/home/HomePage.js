@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './OrderFoodHomePage.css'; // Custom CSS for styling
-import ResponsiveComponent from './ResponsiveComponent';
-import eatImage from "./eat.png"
-import logon from "./logon.png"
+import './OrderFoodHomePage.css'; 
 import CustomerOrderSteps from './CustomerOrderSteps';
 import { Container } from 'react-bootstrap';
 import EmployeeOrderSteps from './EmployeeOrderSteps';

@@ -1,6 +1,6 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useNav } from '../NavContext';
-import logo from "../../logon.png"
+import logo from "../../assets/logon.png"
 export default function NavBar(){
     const { setActiveTab , activeTab} = useNav()
     const handleTabClick = (tab) => {

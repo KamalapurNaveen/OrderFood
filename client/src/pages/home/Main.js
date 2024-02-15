@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './OrderFoodHomePage.css';
-import logon from "./logon.png";
+import logon from "../assets/logon.png";
 
 export default function Main() {
     const [subtitle, setSubtitle] = useState('');

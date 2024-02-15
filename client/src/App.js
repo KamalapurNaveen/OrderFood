@@ -3,12 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './AuthContext';
 import ErrorPage from './ErrorPage';
 
-import HomePage from './pages/HomePage';
+import HomePage from './pages/home/HomePage';
 import CustomerLogin from './pages/customer/Login';
 import CustomerSignup from './pages/customer/SignUp';
 import {CustomerNavProvider} from './pages/customer/NavContext'
 import EmployeeLogin from "./pages/employee/Login";
-import EmployeeDashboard from './pages/employee/Dashboard';
 import PrivateRoute from './PrivateRoute';
 import CustomerForgotPassword from './pages/customer/ForgotPassword';
 import EmployeeForgotPassword from './pages/employee/ForgotPassword';

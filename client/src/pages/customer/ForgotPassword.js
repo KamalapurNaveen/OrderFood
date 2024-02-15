@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LockOutlined, UserOutlined, MobileOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import backgroundImage from '../logo6.jpg'; // Import your background image
+import backgroundImage from '../assets/logo6.jpg'; 
 
 function EmailForm({ onFinish }) {
     return (

@@ -1,15 +1,15 @@
 import React from 'react';
-import ResponsiveComponent from './ResponsiveComponent'; // Import the ResponsiveComponent
-import eatImage from './eat.png'; // Import the image
-import payment from './payment.png';
-import qr from './qr.png';
-import menu from './menu.png';
-import cart from './cart.png';
-import scanner from "./scanner.png"
-import signup from './signup.png'
-import spoons from "./spoons.png"
-import userLogo from "./userLogo.png"
-// Your array of order food steps
+import ResponsiveComponent from './ResponsiveComponent'; 
+import eatImage from '../assets/eat.png'; // Import the image
+import payment from '../assets/payment.png';
+import qr from '../assets/qr.png';
+import menu from '../assets/menu.png';
+import cart from '../assets/cart.png';
+import scanner from "../assets/scanner.png"
+import signup from '../assets/signup.png'
+import spoons from "../assets/spoons.png"
+
+
 const orderFoodSteps = [
   {
     step: 1,

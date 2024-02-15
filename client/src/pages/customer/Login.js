@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-import backgroundImage from '../logo6.jpg'; // Import your background image
+import backgroundImage from '../assets/logo6.jpg'
 
 const Login = () => {
   const navigate = useNavigate();

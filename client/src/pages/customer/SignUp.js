@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import backgroundImage from '../logo6.jpg'
+import backgroundImage from '../assets/logo6.jpg'
 
 const Signup = () => {
   const navigate = useNavigate();

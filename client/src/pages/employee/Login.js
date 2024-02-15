@@ -1,10 +1,9 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-import logoImage from "../userLogo.png";
-import backgroundImage from '../logo6.jpg'; // Import your background image
+import backgroundImage from '../assets/logo6.jpg'; // Import your background image
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ const Login = () => {
       const data = await response.json();
       if (data.success) {
         login('employee');
+        message.success("Successfully logged in")
         navigate("/employee/dashboard");
       }
     } catch (err) {
@@ -72,6 +72,7 @@ const Login = () => {
             <Button type="primary" htmlType="submit" className="login-form-button" >
               Log in
             </Button>
+            <a href="/employee/forgotpassword" style={{ marginLeft: '10px' }}>Forgot Password</a>
           </Form.Item>
         </Form>
       </div>
