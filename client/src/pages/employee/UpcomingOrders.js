@@ -70,23 +70,42 @@ const UpcomingOrders = () => {
     <div style={{ padding: '20px' }}>
       <Title level={3} style={{ marginBottom: '20px', color: '#4E4E4E' }}>Item Counts</Title>
       <Row gutter={[16, 16]}>
-        {Object.entries(itemCounts).map(([itemId, item]) => (
-          <Col key={itemId} xs={12} sm={8} md={6} lg={4}>
-            <Card
-              className='cardh'
-              style={{
-                backgroundImage: `url(${itemImages[itemId]})`, // Use the fetched image URLs directly
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center'
-              }}
-            >
-              <Statistic
-                title={<Text style={{ color: 'black', position: "relative", fontWeight: "10", fontSize: "17px" }}>{item.name}: {item.count} :</Text>}
-                value={item.count}
-                valueStyle={{ fontSize: '20px', color: 'black', fontWeight: "600" }}
-              />
-            </Card>
+      {Object.entries(itemCounts).map(([itemId, item]) => (
+          <Col key={itemId} xs={24} sm={12} md={8} lg={6} xl={4}> {/* Adjust column size based on your layout */}
+            <div style={{ position: 'relative', paddingBottom: '100%', marginBottom: '10px' }}> {/* Maintain aspect ratio for the card */}
+              <Card
+                className='cardh'
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  border: 'px solid #e8e8e8',
+                  borderRadius: '8px', // Adjust border radius as needed
+                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)', // Add shadow for better visual
+                  display: 'flex', // Use flexbox for layout
+                  flexDirection: 'column' // Arrange content vertically
+                }}
+              >
+                <div style={{ flex: 1 }}> {/* Allow the image to grow */}
+                  <img
+                    src={itemImages[itemId]}
+                    alt={item.name}
+                    style={{ width: '100%', height: '100%', borderRadius: '8px 8px 0 0' }} // Adjust border radius as needed
+                  />
+                </div>
+                <div style={{display:"flex"}}>
+                  <div>
+                  <p>{item.name}</p>
+                  </div>
+                  <div>
+                  <p style={{fontWeight:"700", paddingLeft:"20px"}}>{item.count}</p>
+                  </div>
+                </div>
+                
+              </Card>
+            </div>
           </Col>
         ))}
       </Row>

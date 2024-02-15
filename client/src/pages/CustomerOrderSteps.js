@@ -6,13 +6,16 @@ import qr from './qr.png';
 import menu from './menu.png';
 import cart from './cart.png';
 import scanner from "./scanner.png"
+import signup from './signup.png'
+import spoons from "./spoons.png"
+import userLogo from "./userLogo.png"
 // Your array of order food steps
 const orderFoodSteps = [
   {
     step: 1,
     title: "Login and Signup",
     text: "Sign in or create an account to start ordering your favorite meals. Enjoy a seamless experience tailored just for you.",
-    image: eatImage
+    image: signup
   },
   {
     step: 2,
@@ -48,7 +51,7 @@ const orderFoodSteps = [
     step: 7,
     title: "Get Food and Eat",
     text: "Once your order is confirmed, sit back and relax. Your delicious meal will be prepared fresh and ready for pickup. Bon appétit!",
-    image: eatImage
+    image: spoons
   }
 ];
 

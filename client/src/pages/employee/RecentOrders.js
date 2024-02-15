@@ -60,7 +60,6 @@ const RecentOrders = () => {
   // Calculate individual item counts
   const itemCounts = recentOrders.reduce((acc, order) => {
     order.items.forEach(orderItem => {
-      console.log(orderItem);
       const { item: itemId, name, cost, quantity } = orderItem;
       const totalCost = cost * quantity;
       if (acc[itemId]) {
@@ -84,22 +83,41 @@ const RecentOrders = () => {
       <Title level={3} style={{ marginBottom: '20px', color: '#4E4E4E' }}>Item Counts</Title>
       <Row gutter={[16, 16]}>
         {Object.entries(itemCounts).map(([itemId, item]) => (
-          <Col key={itemId} xs={12} sm={8} md={6} lg={4}>
-            <Card
-              className='cardh'
-              style={{
-                backgroundImage: `url(${itemImages[itemId]})`, // Use the fetched image URLs directly
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center'
-              }}
-            >
-              <Statistic
-                title={<Text style={{ color: 'black', position: "relative", fontWeight: "10", fontSize: "17px" }}>{item.name}: {item.count} :</Text>}
-                value={item.count}
-                valueStyle={{ fontSize: '20px', color: 'black', fontWeight: "600" }}
-              />
-            </Card>
+          <Col key={itemId} xs={24} sm={12} md={8} lg={6} xl={4} style={{padding:"0px",margin:"0"}}> {/* Adjust column size based on your layout */}
+            <div style={{ position: 'relative', paddingBottom: '100%', marginBottom: '10px' }}> {/* Maintain aspect ratio for the card */}
+              <Card
+                className='cardh'
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  
+                  borderRadius: '8px', // Adjust border radius as needed
+                  // Add shadow for better visual
+                  display: 'flex', // Use flexbox for layout
+                  flexDirection: 'column' // Arrange content vertically
+                }}
+              >
+                <div > 
+                  <img
+                    src={itemImages[itemId]}
+                    alt={item.name}
+                    style={{ width: '100%', height: '100%' }} // Adjust border radius as needed
+                  />
+                </div>
+                <div style={{display:"flex"}}>
+                  <div>
+                  <p>{item.name}</p>
+                  </div>
+                  <div>
+                  <p style={{fontWeight:"700", paddingLeft:"20px"}}>{item.count}</p>
+                  </div>
+                </div>
+                
+              </Card>
+            </div>
           </Col>
         ))}
       </Row>

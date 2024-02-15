@@ -5,6 +5,7 @@ import { Row, Col, Modal, Button, Tag, message ,Input} from 'antd';
 const Scanner = () => {
   const [result, setResult] = useState('');
   const [orderData, setOrderData] = useState(null);
+  const [otp,setOtp] =useState(null);
   const [userData, setUserData] = useState(null);
   const [walletData, setWalletData] = useState(null);
   const [amountToAdd, setAmountToAdd] = useState('');
@@ -66,9 +67,19 @@ const Scanner = () => {
     }
   };
 
-  const handleAddMoney = async (wallet_id,amountToAdd) => {
+  const handleAddMoney = async (wallet_id,amountToAdd,otp) => {
+    function isFourDigitNumber(str) {
+      // Regular expression to match 4 digits
+      const regex = /^\d{4}$/;
+      return regex.test(str);
+    }
+    if(!isFourDigitNumber(otp)) {
+      message.error('OTP should be 4 digit number');
+      return;
+    }
+
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/profile/customer/wallet?id=${wallet_id}&amount=${amountToAdd}`, {
+      const response = await fetch(`http://localhost:3500/api/_e/profile/customer/wallet?id=${wallet_id}&amount=${amountToAdd}&otp=${otp}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -79,8 +90,7 @@ const Scanner = () => {
       if (resData.success) {
         message.success(`Amount ₹${amountToAdd} added successfully`);
       } else {
-        message.error("Failed to add amount");
-        console.error('Failed to add amount:', response.statusText);
+        message.error(resData.message);
       }
     } catch (error) {
       message.error("Error adding amount, 500");
@@ -150,8 +160,7 @@ const Scanner = () => {
         console.log('Order cancelled successfully');
         message.success("Order cancelled successfully")
       } else {
-        message.error("status is not ok")
-        console.error('Failed to cancel order:', response.statusText);
+        message.error(resData.message);
       }
     } catch (error) {
       message.error("Error cancelling order, 500")
@@ -181,8 +190,7 @@ const Scanner = () => {
         console.log('Order delivered successfully');
         message.success("Order delivered successfully")
       } else {
-        message.error("status is not ok")
-        console.error('Failed to deliver order:', response.statusText);
+        message.error(resData.message);
       }
     } catch (error) {
       message.error("Error delivering order, 500")
@@ -256,37 +264,44 @@ const Scanner = () => {
 
       {/* Add modal for wallet data if needed */}
       <Modal
-        title="User Details"
-        visible={showWalletModal}
-        onCancel={handleModalClose}
-        footer={[
-          <Button key="close" onClick={handleModalClose}>
-            Close
-          </Button>,
-          <Button key="addMoney" type="primary" onClick={() => handleAddMoney(userData?.wallet_id,amountToAdd)}>
-            Add Money
-          </Button>,
-        ]}
-        centered
-        maskClosable={false}
-        closable={false}
-      >
-        {userData && (
-          <>
-            <p>
-              <strong>User ID:</strong> {userData.id}
-            </p>
-            <p>
-              <strong>Username:</strong> {userData.name}
-            </p>
-            <Input
-              placeholder="Amount to Add"
-              onChange={(e) => setAmountToAdd(e.target.value)}
-              value={amountToAdd}
-            />
-          </>
-        )}
-      </Modal>
+  title="User Details"
+  visible={showWalletModal}
+  onCancel={handleModalClose}
+  footer={[
+    <Button key="close" onClick={handleModalClose}>
+      Close
+    </Button>,
+    <Button key="addMoney" type="primary" onClick={() => handleAddMoney(userData?.wallet_id, amountToAdd, otp)}>
+      Add Money
+    </Button>,
+  ]}
+  centered
+  maskClosable={false}
+  closable={false}
+  style={{ maxWidth: '400px' }} // Adjust the maximum width as needed
+>
+  {userData && (
+    <>
+      <p>
+        <strong>User ID:</strong> {userData.id}
+      </p>
+      <p>
+        <strong>Username:</strong> {userData.name}
+      </p>
+      <Input
+        placeholder="Amount to Add"
+        onChange={(e) => setAmountToAdd(e.target.value)}
+        value={amountToAdd}
+        style={{ marginBottom: '10px' }} // Add some bottom margin to separate input fields
+      />
+      <Input
+        placeholder="Employee Security Pin"
+        onChange={(e) => setOtp(e.target.value)}
+        value={otp}
+      />
+    </>
+  )}
+</Modal>
     </>
   );
 };
