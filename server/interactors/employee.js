@@ -1,5 +1,3 @@
-const { EmployeeModel } = require("../models");
-
 async function registerEmployee({
     name, email, mobile, password, auth, EmployeeModel
 }){
@@ -39,17 +37,23 @@ async function logoutEmployee(){
     }
 }
 
-async function getProfileInfo({id, CustomerModel}){
-    const {_id, email, name }  = await EmployeeModel.findById(id)
+async function getProfileInfo({id, EmployeeModel}){
+    const {email, name }  = await EmployeeModel.findById(id)
     return {id, email, name};
 }
 
 async function getCustomerById({id, CustomerModel}){
-    const {_id, email, name, wallet_id}  = await CustomerModel.findById(id)
+    const {email, name, wallet_id}  = await CustomerModel.findById(id)
     return {id, email, name, wallet_id};
 }
 
-async function addMoneyToWallet({wallet_id,amount, WalletModel}){
+async function addMoneyToWallet({userId, wallet_id,amount, otp, WalletModel, EmployeeModel}){
+    const employee = await EmployeeModel.findById(userId)
+    const empOTP = await employee.otp
+    
+    if(empOTP !== otp) {
+        throw new Error('invalid employee pin!')
+    }
     const wallet   = await WalletModel.findById(wallet_id)
     const updateDatedAmount=Number(wallet.balance) + Number(amount);
     wallet.balance =updateDatedAmount;
@@ -59,6 +63,25 @@ async function addMoneyToWallet({wallet_id,amount, WalletModel}){
         message: `Recharged wallet with ₹${amount}`,
     });
     await wallet.save();
+}
+
+async function updatePassword({id, currentPassword, newPassword, EmployeeModel, auth}){
+    var user = await EmployeeModel.findById(id);
+    if(!user){
+        throw new Error('invalid user')
+    }else {
+        var valid = await auth.verifyUser({
+            password : currentPassword, 
+            salt  : user.salt, 
+            hash : user.hash
+        })
+        if(!valid) {
+            throw new Error('invalid password')
+        } else {
+            var credentials  = await auth.createHash({ password : newPassword })
+            await EmployeeModel.updateOne({_id : id}, {...credentials})
+        }
+    }
 }
 
 async function sendOTP({email, EmployeeModel, mail}){
@@ -100,6 +123,7 @@ module.exports = {
     getProfileInfo,
     getCustomerById,
     addMoneyToWallet,
+    updatePassword,
     sendOTP,
     verifyOTP,
     updateOTPPassword,

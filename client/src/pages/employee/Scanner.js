@@ -79,7 +79,7 @@ const Scanner = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3500/api/_e/profile/customer/wallet?id=${wallet_id}&amount=${amountToAdd}&otp=${otp}`, {
+      const response = await fetch(`http://localhost:3500/api/_e/profile/customer/wallet?wallet_id=${wallet_id}&amount=${amountToAdd}&otp=${otp}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
