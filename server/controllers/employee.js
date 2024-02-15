@@ -69,9 +69,9 @@ async function getCustomerById(req,res){
 }
 async function addMoneyToWallet(req,res){
     try {
-        const wallet_id = req.query.id
-        const amount=req.query.amount;
-         await employeeInteractor.addMoneyToWallet({wallet_id, amount,WalletModel})
+        const userId = req.sessionData.id
+        const {wallet_id, amount, otp } = { ...req.query }
+         await employeeInteractor.addMoneyToWallet({userId , wallet_id, amount, otp, WalletModel, EmployeeModel})
         res.status(200).send({success : true, message : "Amount added successfully"})
     }catch(err){
         console.log(err)
@@ -164,6 +164,17 @@ async function getQueueStats(req, res){
     }
 }
 
+async function updatePassword(req, res){
+    try{
+        const id = req.sessionData.id
+        const {currentPassword, newPassword} = { ...req.body }
+        await employeeInteractor.updatePassword({id, currentPassword, newPassword, EmployeeModel, auth})
+        res.status(200).send({success : true, message : 'Your password has been changed successfully' })        
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
 async function employeeForgotPasswordSendOTP(req, res){
     try{
         const email = req.query.email
@@ -211,6 +222,7 @@ module.exports = {
     getOrderHistory,
     getOrderQueue,
     getQueueStats,
+    updatePassword,
     employeeForgotPasswordSendOTP,
     employeeForgotPasswordVerifyOTP,
     employeeForgotPasswordUpdate,
