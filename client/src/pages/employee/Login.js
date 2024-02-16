@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import backgroundImage from "../assets/logo6.jpg"
 import API_LINK from '../../util/api.link'
+import logon from "../assets/logon.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ const Login = () => {
 
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <img src={logon} alt="Logo" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1 }} width="100" />
       <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded" style={{backgroundColor: 'rgba(255, 255, 255, 0.65)'}}>
+      
       <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h2>
         <Form
           name="normal_login"

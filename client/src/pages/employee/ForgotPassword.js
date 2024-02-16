@@ -4,9 +4,11 @@ import { Button, Form, Input,message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import API_LINK from '../../util/api.link'
 import backgroundImage from '../assets/logo6.jpg'; 
+import logon from "../assets/logon.png";
 function EmailForm({ onFinish }) {
     return (
         <div className="container-fluid d-flex align-items-center justify-content-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.9' }}>
+            <img src={logon} alt="Logo" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1 }} width="100" />
             <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded">
                 <div className="mb-3">
                     <h6>Please provide the email address.</h6>
@@ -41,6 +43,7 @@ function EmailForm({ onFinish }) {
 function OTPForm({ onFinish }) {
     return (
         <div className="container-fluid d-flex align-items-center justify-content-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.9' }}>
+            <img src={logon} alt="Logo" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1 }} width="100" />
             <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded">
                 <div className="mb-3">
                     <h6>Enter OTP sent to your email.</h6>
@@ -75,6 +78,7 @@ function OTPForm({ onFinish }) {
 function NewPasswordForm({ onFinish }) {
     return (
         <div className="container-fluid d-flex align-items-center justify-content-center vh-100 " style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.9' }}>
+            <img src={logon} alt="Logo" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1 }} width="100" />
             <div className="col-md-6 col-lg-3 col-sm-11 card p-4 shadow rounded">
                 <div className="mb-3">
                     <h6>Set new password</h6>

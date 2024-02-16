@@ -7,6 +7,7 @@ import menu from "../assets/menu.png"
 import signin from "../assets/signin.png"
 import addItem from "../assets/additem.png"
 import history from "../assets/history.png"
+import item_status from "../assets/item_status.png"
 // Your array of employee order steps
 const employeeOrderSteps = [
   {
@@ -41,9 +42,9 @@ const employeeOrderSteps = [
   },
   {
     step: 6,
-    title: "Change Status of Order",
+    title: "Change Status of Item",
     text: "Update the status of customer orders to keep track of their progress. Mark orders as confirmed, in progress, or completed for efficient order management.",
-    image: eatImage
+    image: item_status
   },
   {
     step: 7,
@@ -55,7 +56,7 @@ const employeeOrderSteps = [
     step: 8,
     title: "View Upcoming Orders",
     text: "Preview and prepare for upcoming orders scheduled for processing. Stay ahead of customer demand and ensure timely order fulfillment.",
-    image: eatImage
+    image: history
   }
 ];
 

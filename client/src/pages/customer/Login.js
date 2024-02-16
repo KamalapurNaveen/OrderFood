@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-
+import logon from "../assets/logon.png";
 import API_LINK from '../../util/api.link'
 import backgroundImage from '../assets/logo6.jpg'
 const Login = () => {
@@ -52,6 +52,7 @@ const Login = () => {
           zIndex: -1
         }}
       />
+       <img src={logon} alt="Logo" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1 }} width="100" />
       <Card style={{ width: '90vw', maxWidth: '400px', padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.65)' }}>
       <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h2>
       <Form

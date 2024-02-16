@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../assets/logo6.jpg'
 import API_LINK from '../../util/api.link'
+import logon from "../assets/logon.png";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -27,7 +28,11 @@ const Signup = () => {
       const data = await response.json();
       console.log(data);
       if (data.success) {
+        message.success("Successfully Registered");
         navigate("/customer/signin");
+      }
+      else{
+         message.error(data.message);
       }
     } catch (err) {
       console.log(err);
@@ -36,6 +41,7 @@ const Signup = () => {
 
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <img src={logon} alt="Logo" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1 }} width="100" />
       <div style={{ width: '90%', maxWidth: '400px', padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.65)', borderRadius: '8px' }}>
         <h2 className="mb-4" style={{ textAlign: 'center' }}>Create an Account</h2>
         <Form onFinish={onFinish}>

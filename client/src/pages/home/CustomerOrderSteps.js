@@ -10,7 +10,7 @@ import signup from '../assets/signup.png'
 import spoons from "../assets/spoons.png"
 
 
-const orderFoodSteps = [
+const customerOrderSteps = [
   {
     step: 1,
     title: "Login and Signup",
@@ -59,7 +59,7 @@ const CustomerOrderSteps = () => {
   return (
     <div>
 
-      {orderFoodSteps.map((step, index) => (
+      {customerOrderSteps.map((step, index) => (
         <ResponsiveComponent
           key={index}
           imagePosition={index % 2 === 0 ? 'left' : 'right'} // Alternate between left and right for image position
