@@ -14,7 +14,7 @@ export default function Wallet(){
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [userId,setUserId] =useState(null);
     React.useEffect(()=>{
-        fetch(`${API_LINK}3500/api/_c/wallet/transactions`,{ 
+        fetch(`${API_LINK}/api/_c/wallet/transactions`,{ 
             credentials: 'include',
             
         })
