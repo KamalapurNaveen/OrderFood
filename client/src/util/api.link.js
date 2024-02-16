@@ -1,4 +1,2 @@
-const LOCALHOST = 'http://localhost:3500'
-const SERVER = '.'
-
+const SERVER = process.env.REACT_APP_SERVER || 'http://localhost:3500';
 export default SERVER
