@@ -1,2 +1,8 @@
-const SERVER = process.env.REACT_APP_SERVER || 'http://localhost:3500';
+let SERVER = process.env.REACT_APP_SERVER || '.';
+
+if(SERVER === '.'){
+    console.log(window.location.origin)
+    SERVER = window.location.origin
+}
+
 export default SERVER

@@ -13,6 +13,7 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
+      console.log(API_LINK)
       var response = await fetch(`${API_LINK}/api/_c/auth/login`, {
         method: "post",
         body: JSON.stringify(values),
