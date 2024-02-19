@@ -10,7 +10,8 @@ describe('Item Interactor', () => {
 
     beforeEach(() => {
         OrderModel = {
-            findById : sinon.stub()
+            findById : sinon.stub(),
+            findByIdAndUpdate : sinon.stub()
         }
     })
 
@@ -33,13 +34,17 @@ describe('Item Interactor', () => {
 
     describe('updateOrderInfo', () => {
         it('should return the updated order', async () => {
-            OrderModel.findById.resolves(null)
+            const orderInfo = {status : 'delivered'}
+            OrderModel.findByIdAndUpdate.resolves(orderInfo)
             const order = await updateOrderInfo({
-                orderInfo : {},
+                orderInfo,
                 OrderModel,
                 CustomerModel,
                 WalletModel
             })
+            if (order !== orderInfo){
+                throw new Error('unexpected success!')
+            }
         })
     })
 })
