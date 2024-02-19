@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 const ResponsiveComponent = ({ image, title, displayText, imagePosition, showButton, user }) => {
   const [displayTextState, setDisplayTextState] = useState('');
-  const [displayImageFirst, setDisplayImageFirst] = useState(true); // State to determine if image should be displayed first
+  const [displayImageFirst, setDisplayImageFirst] = useState(false); // State to determine if image should be displayed first
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleLogin = () => {
@@ -15,6 +15,22 @@ const ResponsiveComponent = ({ image, title, displayText, imagePosition, showBut
     else navigate('/employee/signin');
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mediaQuery.matches);
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    mediaQuery.addListener(handleResize);
+
+    return () => {
+      mediaQuery.removeListener(handleResize);
+    };
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setDisplayTextState(prevText => {
@@ -26,15 +42,19 @@ const ResponsiveComponent = ({ image, title, displayText, imagePosition, showBut
   }, [displayText]);
 
   useEffect(() => {
-    // Set displayImageFirst based on imagePosition
-    setDisplayImageFirst(imagePosition === 'left');
-  }, [imagePosition]);
+    if(imagePosition==='left'){
+        setDisplayImageFirst(true);
+    }
+    else {
+      setDisplayImageFirst(false)
+    }
+  }, [imagePosition,isMobile]);
 
   return (
     <div style={{ marginBottom: '20px', border: '1px solid #ddd', borderRadius: '5px', overflow: 'hidden' }}>
       <Container fluid>
         <Row>
-          {displayImageFirst ? (
+          {(displayImageFirst || isMobile) ? (
             <>
               <Col xs={12} md={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <motion.img
