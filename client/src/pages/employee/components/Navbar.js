@@ -7,7 +7,7 @@ export default function NavBar(){
         setActiveTab(tab);
     };
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className="justify-content-between">
+        <Navbar bg="dark" variant="dark" expand="lg" className="justify-content-between" style={{marginBottom:"17px"}}>
             <Container>
             <Navbar.Brand style={{marginRight:"50%"}}>
                 <img
@@ -22,8 +22,8 @@ export default function NavBar(){
 
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#scanner" onClick={() => handleTabClick('scanner')} className={activeTab === 'scanner' ? 'active' : ''}>Scanner</Nav.Link>
                     <Nav.Link href="#menu" onClick={() => handleTabClick('menu')} className={activeTab === 'menu' ? 'active' : ''}>Menu</Nav.Link>
+                    <Nav.Link href="#scanner" onClick={() => handleTabClick('scanner')} className={activeTab === 'scanner' ? 'active' : ''}>Scanner</Nav.Link>
                     <Nav.Link href="#orders" onClick={() => handleTabClick('orders')} className={activeTab === 'orders' ? 'active' : ''}>Orders</Nav.Link>
                     <Nav.Link href="#profile" onClick={() => handleTabClick('profile')} className={activeTab === 'profile' ? 'active' : ''}>Profile</Nav.Link>
                 </Nav>

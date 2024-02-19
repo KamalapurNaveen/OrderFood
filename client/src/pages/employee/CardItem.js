@@ -19,7 +19,7 @@ const CardItem = ({ item, showButtons, onAvailabilityChange, onDelete }) => {
 
   return (
     <div style={{ width: 400, overflow: 'hidden' }}> {/* Enforce a fixed width */}
-      <Card hoverable style={{ width: '100%', margin: 5 }} actions={showButtons ? [
+      <Card hoverable style={{ width: '100%', margin:"0", marginBottom:"5px" , marginRight:"5px"}} actions={showButtons ? [
         <Button
           type="primary"
           style={{ backgroundColor: item.is_available ? 'red' : 'green' }}

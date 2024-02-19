@@ -11,7 +11,7 @@ import NavBar from './components/Navbar';
 const NavContext = createContext();
 
 export const EmployeeNavProvider = () => {
-  const [activeTab, setActiveTab] = useState('scanner');
+  const [activeTab, setActiveTab] = useState('menu');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => { 
@@ -27,8 +27,8 @@ export const EmployeeNavProvider = () => {
   }, []);
 
   const components = {
-    scanner: <Scanner/>,
     menu: <Menu/>,
+    scanner: <Scanner/>,
     orders: <Orders/>,
     profile : <Profile/>
   };

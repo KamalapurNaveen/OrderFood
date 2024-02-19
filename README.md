@@ -1,46 +1,117 @@
-# Food Ordering Website for Employees
 
-## Project Overview
+# QR-It(Food Delivery Website)
 
 The Food Ordering Website for Employees is a web application designed to streamline the process of ordering food for employees within an organization. The application allows employees to view the daily menu, place orders, make payments, and receive a QR code for their orders. Canteen workers can then scan these QR codes to access order details.
 
-## Features
 
-1. **Menu Display:**
-   - Employees can view the menu for the day with details on available dishes, prices, and descriptions.
 
-2. **Order Placement:**
-   - Users can select dishes from the menu and place orders for lunch.
 
-3. **Payment Processing:**
-   - Secure payment gateway integration for successful order transactions.
+## Installation
 
-4. **QR Code Generation:**
-   - After successful payment, users receive a unique QR code for their order.
+- Clone this project 
 
-5. **Order Management:**
-   - Employees can view their order history and details.
+    ```bash
+      git clone https://github.com/KamalapurNaveen/OrderFood.git
+    
+    ```
+- Navigate to client and install node modules
 
-6. **Canteen Worker Dashboard:**
-   - Canteen workers have a dashboard to scan QR codes and access order information.
+    ```bash
+    npm install or 
+    npm i
+    ```
+- Navigate to server and install node modules
 
-## Technologies Used
+    ```bash
+    npm install or 
+    npm i
+    
+    ```
+    And you should configure your own env file similar to this:
+    ``` 
+    PORT=
+    JWT_KEY=
+    FORGET_PASSWORD_KEY=
+    MONGO_URL_TEST=
+    MONGO_URL=
+    AWS_ACCESS_KEY_ID=
+    AWS_SECRET_ACCESS_KEY=
+    S3_REGION=
+    S3_BUCKET=
+    NODEMAILER_EMAIL=
+    NODEMAILER_PWD=
+    
+    ```
+- You can run in two ways: 
+  - Running both client and server in different ports.
+    ```bash
+    client> npm start
+    server>  npm start
+    ```
+   - Building client and placing in public folder of server.
+        ```bash
+        client> npm run build
+        server> npm start
+        ```
 
-- Frontend: ReactJs, Bootstrap, AntDesign
-- Backend: Node.js, Express.js, MongoDB 
-- QR Code Generation: QR Code Generator Library
-- Authentication: JWT (JSON Web Tokens)
 
-## How It Works
 
-1. **Employee Workflow:**
-   - Log in to the system.
-   - View the menu for the day.
-   - Place an order and proceed to payment.
-   - Receive a QR code upon successful payment.
 
-2. **Canteen Worker Workflow:**
-   - Log in to the canteen worker dashboard.
-   - Scan the QR code from the employee.
-   - Access order details and prepare the order.
+## Customer Flow
+
+
+- **Login and Signup**:
+  Sign in or create an account to start ordering your favorite meals. Enjoy a seamless experience tailored just for you.
+
+- **Explore Menu and Select Items**:
+  Browse through our extensive menu featuring a variety of mouth-watering dishes. From appetizers to desserts, we have something for everyone. Select your desired items and add them to your cart.
+
+- **View Items in Cart**:
+  Review your selected items before proceeding to checkout. Make any adjustments if needed, and ensure your order is accurate before finalizing.
+
+- **Make Payment**:
+  Proceed to payment and choose your preferred payment method. Rest assured, our payment gateway is safe and secure, ensuring your transactions are protected.
+
+- **Get QR Code**:
+  After successful payment, you'll receive a unique QR code. This code will be used to confirm your order at the canteen.
+
+- **QR Code Scanned by Canteener**:
+  Present your QR code at the canteen counter for order verification. Our staff will quickly scan your code to confirm your order details.
+
+- **Get Food and Eat**:
+  Once your order is confirmed, sit back and relax. Your delicious meal will be prepared fresh and ready for pickup. Bon appétit!
+
+
+##  Employee Flow
+
+- **Login**:
+  Sign in  to access employee features and functionalities. Ensure secure access to manage orders effectively.
+
+- **Manage Menu**:
+  Update and manage the menu items available for customers. Add new items, modify existing ones, or remove items as needed.
+
+- **Scan Customers QR**:
+  Use the QR code scanner to verify customer orders. Ensure that the QR codes provided by customers match the orders placed.
+
+- **Add Items**:
+  Manually add items to customer orders if necessary. This feature allows for flexibility in customizing orders based on customer preferences.
+
+- **Add Money to Users Wallet**:
+  Manage customer wallet balances by adding funds as required. This feature facilitates seamless transactions and ensures customer satisfaction.
+
+- **Change Status of Item**:
+  Update the status of customer orders to keep track of their progress. Mark orders as confirmed, in progress, or completed for efficient order management.
+
+- **View Recent Orders**:
+  Access a list of recent orders to review past transactions and customer preferences. Analyze order history for insights and improvements.
+
+- **View Upcoming Orders**:
+  Preview and prepare for upcoming orders scheduled for processing. Stay ahead of customer demand and ensure timely order fulfillment.
+
+
+## Tech Stack
+
+**Client:** React, Bootstrap, AntDesign, FramerMotion
+
+**Server:** Node, Express, MongoDB
 
