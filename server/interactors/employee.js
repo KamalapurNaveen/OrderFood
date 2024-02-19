@@ -54,9 +54,9 @@ async function addMoneyToWallet({userId, wallet_id,amount, otp, WalletModel, Emp
     if(empOTP !== otp) {
         throw new Error('invalid employee pin!')
     }
-    const wallet   = await WalletModel.findById(wallet_id)
-    const updateDatedAmount=Number(wallet.balance) + Number(amount);
-    wallet.balance =updateDatedAmount;
+    const wallet = await WalletModel.findById(wallet_id)
+    const updateDatedAmount = Number(wallet.balance) + Number(amount);
+    wallet.balance = updateDatedAmount;
     wallet.transactions.push({
         type: 'credit',
         amount: amount,
