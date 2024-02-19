@@ -20,8 +20,8 @@ const BottomNavBar = () => {
     return (
         <div style={{ display: "flex", justifyContent: "space-around" }}>
            
-            <NavItem icon={<ScanOutlined style={{ fontSize: '22px' }} />} name="Scanner" onClick={() => handleClick("Scanner")} />
             <NavItem icon={<MenuOutlined style={{ fontSize: '22px' }} />} name="Menu" onClick={() => handleClick("Menu")} />
+            <NavItem icon={<ScanOutlined style={{ fontSize: '22px' }} />} name="Scanner" onClick={() => handleClick("Scanner")} />
             <NavItem icon={<HistoryOutlined style={{ fontSize: '22px' }} />} name="Orders" onClick={() => handleClick("Orders")} />
             <NavItem icon={<UserOutlined style={{ fontSize: '22px' }} />} name="Profile" onClick={() => handleClick("Profile")} />
         </div>
