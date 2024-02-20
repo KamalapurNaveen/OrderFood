@@ -9,7 +9,6 @@ const itemInteractor = require("../interactors/item")
 const orderInteractor = require("../interactors/order")
 
 async function signup(req, res){
-    console.log(req.body)
     const { name, email, mobile, password } = req.body;
     try {
         await employeeInteractor.registerEmployee({ name, email, mobile, password, auth, EmployeeModel })

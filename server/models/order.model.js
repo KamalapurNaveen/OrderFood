@@ -17,7 +17,8 @@ const OrderSchema = new Schema({
     status: {
         type: String,
         enum: ['pending', 'delivered', 'cancelled'],
-        default: 'pending'
+        default: 'pending',
+        index : true
     },
     cost: Number,
     time: {

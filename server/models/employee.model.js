@@ -2,10 +2,11 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var {get4DigitPin} = require('../util/otp.generator')
+var {sendEmployeePinMail} = require('../services/mail.service')
 
 var EmployeeSchema = new Schema({
   name : String,
-  email: String,
+  email: {type : String, index : true},
   salt : String,
   hash : String,
   otp: {
@@ -16,6 +17,10 @@ var EmployeeSchema = new Schema({
     type: Date,
     default: Date.now
   }
+});
+
+EmployeeSchema.post("save", function (doc) {
+  sendEmployeePinMail({ email: doc.email, name: doc.name, pin: doc.otp });
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
