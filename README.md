@@ -3,6 +3,7 @@
 
 The Food Ordering Website for Employees is a web application designed to streamline the process of ordering food for employees within an organization. The application allows employees to view the daily menu, place orders, make payments, and receive a QR code for their orders. Canteen workers can then scan these QR codes to access order details.
 
+[Click to access our website](https://orderfood-9191.onrender.com)
 
 
 
