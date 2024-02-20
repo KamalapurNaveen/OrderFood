@@ -14,7 +14,6 @@ const Scanner = () => {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [scannerVisible, setScannerVisible] = useState(true); // Track visibility of scanner
-  const [selectedDeviceId, setSelectedDeviceId] = useState(null); // Track selected camera device
   const scannerRef = useRef(null);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const Scanner = () => {
       // Start scanning if permission is granted
       if (scannerRef.current) {
         scannerRef.current.streamRef.current.srcObject = stream;
-        scannerRef.current.startScan(selectedDeviceId);
+        scannerRef.current.startScan();
       }
     } catch (error) {
       console.error('Error accessing camera:', error);
@@ -125,7 +124,7 @@ const Scanner = () => {
     setShowOrderModal(false);
     setShowWalletModal(false);
     if (scannerRef.current) {
-      scannerRef.current.resumeScan(selectedDeviceId);
+      scannerRef.current.resumeScan();
     }
     setScannerVisible(true);
   };
@@ -186,34 +185,20 @@ const Scanner = () => {
     handleModalClose();
   };
 
-  const handleDeviceChange = (deviceId) => {
-    setSelectedDeviceId(deviceId);
-    if (scannerRef.current) {
-      scannerRef.current.stopScan();
-      scannerRef.current.startScan(deviceId);
-    }
-  };
-
   return (
     <>
       <Row justify="center" align="middle" className="mt-4" style={{ height: 'calc(100vh - 64px)' }}>
         <Col xs={24} md={12} lg={8}>
           {permissionGranted && scannerVisible && (
-            <>
+            <div style={{ position: 'relative', width: '100%', paddingBottom: '100%' }}>
               <QrReader
                 ref={scannerRef}
                 delay={300}
                 onError={console.error}
                 onScan={handleScan}
-                style={{ width: '100%', maxHeight: '70vh' }}
+                style={{ position: 'absolute', width: '100%', height: '100%' }}
               />
-              <Row justify="center" style={{ marginBottom: '10px' }}>
-                <Col>
-                  <Button onClick={() => handleDeviceChange(null)}>Switch Camera</Button>
-                </Col>
-              </Row>
-
-            </>
+            </div>
           )}
         </Col>
       </Row>
