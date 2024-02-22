@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Item  from "./components/ItemCard";
 import API_LINK from '../../util/api.link'
+import { useNav } from './NavContext';
 
 const Menu = () => {
     const [items, setItems] = useState([]);
-    const [cartItems, setCartItems] = useState(JSON.parse(window.localStorage.getItem("cart")) || {});
+    const {cartItems, setCartItems} = useNav();
 
     useEffect(() => {
         const fetchItems = async () => {

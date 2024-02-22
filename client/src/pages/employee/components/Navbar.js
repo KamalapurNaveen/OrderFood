@@ -7,7 +7,7 @@ export default function NavBar(){
         setActiveTab(tab);
     };
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className="justify-content-between" style={{marginBottom:"17px"}}>
+        <Navbar bg="dark" variant="dark" expand="lg" className="justify-content-between" fixed="top" style={{position: "sticky"}} >
             <Container>
             <Navbar.Brand style={{marginRight:"50%"}}>
                 <img

@@ -11,9 +11,14 @@ const NavContext = createContext();
 
 export const CustomerNavProvider = () => {
   const [activeTab, setActiveTab] = useState('menu');
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCart = window.localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : {};
+  });
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => { 
+    useEffect(() => { 
     const handleResize = () => {  
       setWindowWidth(window.innerWidth);
     };
@@ -34,7 +39,7 @@ export const CustomerNavProvider = () => {
   };
 
   return (
-    <NavContext.Provider value={{ activeTab, setActiveTab }}>
+    <NavContext.Provider value={{ activeTab, setActiveTab, cartItems, setCartItems }}>
       <div style={{paddingBottom : "100px", minHeight: '100vh', backgroundColor: 'rgba(195, 195, 195, 0.33)'}}>  
         <NavBar/>
         {components[activeTab]}
