@@ -4,8 +4,17 @@ async function registerCustomer({
     var user = await CustomerModel.findOne({email});
     if(!user){
         var credentials  = await auth.createHash({password})
-        const wid = await WalletModel.create({ transactions : [] })
-        await CustomerModel.create({name, email, mobile, password, ...credentials, wallet_id : wid._id})
+        const amountToAdd = 1000;
+        const wallet = await WalletModel.create({
+            balance: amountToAdd,
+            transactions: [{
+                type: 'credit',
+                amount: amountToAdd,
+                message: `Recharged wallet with ₹${amountToAdd}`,
+                time: new Date() 
+            }]
+        });
+        await CustomerModel.create({name, email, mobile, password, ...credentials, wallet_id : wallet._id})
     }else{
         throw new Error('email already exists')
     }

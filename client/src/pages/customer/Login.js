@@ -97,9 +97,8 @@ const Login = () => {
               Log in
             </Button>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <a href="/customer/signup" style={{ marginRight: '10px' }}>Register now!</a>
-              <div style={{ width: '1px', height: '12px', backgroundColor: 'black', margin: '0 10px' }}></div>
-              <a href="/customer/forgotpassword" style={{ marginLeft: '10px' }}>Forgot Password</a>
+              <a href="/customer/signup" style={{ marginRight: '10px', textDecoration: 'none'}}>Sign up now</a>
+              <a href="/customer/forgotpassword" style={{ marginLeft: '10px', textDecoration: 'none' }}>Forgot Password</a>
             </div>
           </div>
         </Form.Item>

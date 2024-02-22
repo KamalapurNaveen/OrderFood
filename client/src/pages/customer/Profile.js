@@ -25,6 +25,7 @@ export default function Profile(){
 
     function customerLogout(){
         logout()
+        window.localStorage.clear()
         navigate('/')
     }
 

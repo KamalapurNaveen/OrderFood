@@ -7,6 +7,7 @@ import BillCard from "./components/BillCard"
 import CustomModel from './components/CustomModel';
 import OrderStatus from  './components/OrderStatus'
 import API_LINK from '../../util/api.link'
+import { useNav } from './NavContext';
 
 function parseOrderData(jsonData) {
     const orderItems = Object.keys(jsonData).map(itemId => {
@@ -26,13 +27,10 @@ function parseOrderData(jsonData) {
 }
 
 export default function Cart() {
+    const {cartItems, setCartItems} = useNav();
     const [showStatusModel, setShowStatusModel] = useState(false);
     const [walletStatus, setWalletStatus] = useState({ balanceAvailable: false, message: "Something went wrong. Please try again later." });
     const [disable, setDisable] = useState(true);
-    const [cartItems, setCartItems] = useState(() => {
-        const storedCart = window.localStorage.getItem("cart");
-        return storedCart ? JSON.parse(storedCart) : {};
-    });
 
     useEffect(() => {
         window.localStorage.setItem("cart", JSON.stringify(cartItems));
