@@ -55,6 +55,16 @@ async function getAllItems(req,res){
     }
 }
 
+async function searchItem(req, res){
+    try{
+        const query = req.query.text
+        const items = await itemInteractor.searchItem({query, ItemModel })       
+        res.status(200).send({success : true, data : {items}}) 
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
+
 async function addOrder(req,res){
     try {
         const order = req.body
@@ -172,6 +182,7 @@ module.exports = {
     customerForgotPasswordVerifyOTP, 
     customerForgotPasswordUpdate,
     getAllItems,
+    searchItem,
     addOrder,
     cancelOrder,
     getHistory,

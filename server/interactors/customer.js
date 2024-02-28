@@ -1,19 +1,12 @@
+const {createWallet} = require('./wallet');
+
 async function registerCustomer({
     name, email, mobile, password, auth, CustomerModel, WalletModel
 }){
     var user = await CustomerModel.findOne({email});
     if(!user){
         var credentials  = await auth.createHash({password})
-        const amountToAdd = 1000;
-        const wallet = await WalletModel.create({
-            balance: amountToAdd,
-            transactions: [{
-                type: 'credit',
-                amount: amountToAdd,
-                message: `Recharged wallet with ₹${amountToAdd}`,
-                time: new Date() 
-            }]
-        });
+        const wallet = await createWallet({ amountToAdd: 1000 })
         await CustomerModel.create({name, email, mobile, password, ...credentials, wallet_id : wallet._id})
     }else{
         throw new Error('email already exists')

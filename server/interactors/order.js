@@ -1,3 +1,5 @@
+const {creditWallet, debitWallet} = require('./wallet');
+
 async function getOrderInfo({id, OrderModel}){
     const order = await OrderModel.findById(id)
     return order
@@ -51,23 +53,16 @@ async function getQueueStats({OrderModel, ItemModel}){
 }
 
 async function addCustomerOrder({ order, walletId,  userId, userName, OrderModel, WalletModel }) {
-    const wallet = await WalletModel.findById(walletId);
-    if (wallet.balance < order.cost) {
-        return { balanceAvailable: false, message: "Insufficient balance." };
+    const createOrder = async () => {
+            const createdOrder = await OrderModel.create({...order, userId, userName});
+            return createdOrder
     }
-    const createdOrder = await OrderModel.create({...order, userId, userName});
-    wallet.balance -= order.cost;
-    wallet.transactions.push({
-        type: 'debit',
-        amount: order.cost,
-        message: `Payment for order ${createdOrder._id}`,
-        orderId: createdOrder._id
-    });
-    await wallet.save();
-    return { balanceAvailable: true, orderId: createdOrder._id, message: "Order placed successfully." };
+
+    const response = debitWallet({amount : order.cost, walletId, WalletModel, createOrder})
+    return response;
 }
 
-async function cancelCustomerOrder({ orderId, walletId, WalletModel, OrderModel }) {
+async function cancelCustomerOrder({ orderId, wallet_id: walletId, WalletModel, OrderModel }) {
     const order = await OrderModel.findById(orderId);
     if (!order) {
         return { success: false, message: "Order not found." };
@@ -76,18 +71,9 @@ async function cancelCustomerOrder({ orderId, walletId, WalletModel, OrderModel 
         return { success: false, message: "Order is already cancelled." };
     }
     order.status = 'cancelled';
-    const wallet = await WalletModel.findById(walletId);
-    wallet.balance += order.cost;
-    wallet.transactions.push({
-        type: 'credit',
-        amount: order.cost,
-        message: `Refund for cancelled order ${order._id}`,
-        orderId: order._id
-    });
+    await creditWallet({wallet_id: walletId, amount : order.cost, WalletModel})
     await order.save();
-    await wallet.save();
     return { success: true, message: "Order cancelled successfully." };
-
 }
 
 async function getCustomerOrderHistory({ walletId, WalletModel, OrderModel }) {
