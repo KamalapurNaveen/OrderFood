@@ -48,7 +48,7 @@ async function customerLogout(_, res){
 
 async function getAllItems(req,res){
     try{
-        const items = await itemInteractor.getAllItems({ItemModel})
+        const items = await itemInteractor.getAvailableItems({ItemModel})
         res.status(200).send({success : true, data : {items}})
     }catch(err){
         res.status(500).send({success : false, message : err.message})

@@ -34,12 +34,11 @@ async function creditWallet({wallet_id, amount, WalletModel}){
 }
 
 async function debitWallet({amount, wallet_id, WalletModel, createOrder}){
-    const createdOrder = await createOrder()
-
     const wallet = await WalletModel.findById(wallet_id);
     if (wallet.balance < amount) {
         return { balanceAvailable: false, message: "Insufficient balance." };
     }
+    const createdOrder = await createOrder()
     wallet.balance -= amount;
     wallet.transactions.push({
         type: 'debit',

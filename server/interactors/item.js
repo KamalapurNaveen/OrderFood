@@ -1,7 +1,13 @@
 async function getAllItems({ItemModel}){
+    const items = await ItemModel.find()
+    return items
+}
+
+async function getAvailableItems({ItemModel}){
     const items = await ItemModel.find({is_available : true})
     return items
 }
+
 async function getItem({ itemId, ItemModel}){
     const item=await ItemModel.findById(itemId)
     return item;
@@ -46,6 +52,7 @@ async function searchItem({ query, ItemModel}){
 
 module.exports = {
     getAllItems,
+    getAvailableItems,
     addItem,
     getItem,
     deleteItem,
