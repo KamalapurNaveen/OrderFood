@@ -1,3 +1,5 @@
+const {rechargeWallet} = require('./wallet');
+
 async function registerEmployee({
     name, email, mobile, password, auth, EmployeeModel
 }){
@@ -54,15 +56,7 @@ async function addMoneyToWallet({userId, wallet_id,amount, otp, WalletModel, Emp
     if(empOTP !== otp) {
         throw new Error('invalid employee pin!')
     }
-    const wallet = await WalletModel.findById(wallet_id)
-    const updateDatedAmount = Number(wallet.balance) + Number(amount);
-    wallet.balance = updateDatedAmount;
-    wallet.transactions.push({
-        type: 'credit',
-        amount: amount,
-        message: `Recharged wallet with ₹${amount}`,
-    });
-    await wallet.save();
+    await rechargeWallet({wallet_id, amount, WalletModel})
 }
 
 async function updatePassword({id, currentPassword, newPassword, EmployeeModel, auth}){

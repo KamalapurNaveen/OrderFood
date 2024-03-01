@@ -159,23 +159,20 @@ describe('Order Interactors', () => {
             ];
     
             const findQuery = sinon.stub().resolves(mockOrderQueue);
-            const sortStub = sinon.stub().returns(mockOrderQueue);
             const OrderModelStub = { find: findQuery };
-            OrderModelStub.find.returns({ sort: sortStub });
+            OrderModelStub.find.returns({ sort: () => mockOrderQueue });
     
             const orderQueue = await getOrderQueue({ OrderModel: OrderModelStub });
-    
             expect(orderQueue).to.deep.equal(mockOrderQueue);
         });
-    
+
         it('should return an empty array if no pending orders are found', async () => {
-            const findQuery = sinon.stub().resolves({ sort : () => [] });
-            const OrderModelStub = { find: findQuery };
-    
-            const orderQueue = await getOrderQueue({ OrderModel: OrderModelStub });
-    
-            expect(orderQueue).to.be.an('array').that.is.empty;
-        });
+            const OrderModel = {
+                find : function(){ return {sort  : () => []}}
+            };
+            const response =  await  getOrderQueue({OrderModel})
+            expect(response).to.be.an('array').that.is.empty;
+          });
     });
     
 });

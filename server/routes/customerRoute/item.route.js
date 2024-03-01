@@ -1,8 +1,9 @@
 const express = require("express")
 const route = express.Router()
 
-const {getAllItems} = require("../../controllers/customer")
+const {getAllItems, searchItem} = require("../../controllers/customer")
 
 route.get("/", getAllItems)
+route.get("/search", searchItem)
 
 module.exports = route
