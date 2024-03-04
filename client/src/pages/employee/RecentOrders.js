@@ -70,7 +70,6 @@ const RecentOrders = () => {
                 <div > 
                   <img
                     src={stat.image}
-                    alt={stat.name}
                     style={{ width: '100%', height: '100%' }} // Adjust border radius as needed
                   />
                 </div>

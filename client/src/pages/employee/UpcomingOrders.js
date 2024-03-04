@@ -57,7 +57,6 @@ const UpcomingOrders = () => {
                 <div style={{ flex: 1 }}> {/* Allow the image to grow */}
                   <img
                     src={stat.image}
-                    alt={stat.name}
                     style={{ width: '100%', height: '100%', borderRadius: '8px 8px 0 0' }} // Adjust border radius as needed
                   />
                 </div>
