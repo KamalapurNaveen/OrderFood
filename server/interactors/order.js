@@ -62,7 +62,7 @@ async function addCustomerOrder({ order, walletId,  userId, userName, OrderModel
     return response;
 }
 
-async function cancelCustomerOrder({ orderId, wallet_id: walletId, WalletModel, OrderModel }) {
+async function cancelCustomerOrder({ orderId, walletId, WalletModel, OrderModel }) {
     const order = await OrderModel.findById(orderId);
     if (!order) {
         return { success: false, message: "Order not found." };
@@ -71,7 +71,7 @@ async function cancelCustomerOrder({ orderId, wallet_id: walletId, WalletModel, 
         return { success: false, message: "Order is already cancelled." };
     }
     order.status = 'cancelled';
-    await creditWallet({wallet_id: walletId, amount : order.cost, WalletModel})
+    await creditWallet({walletId, amount : order.cost, WalletModel, orderId: order._id})
     await order.save();
     return { success: true, message: "Order cancelled successfully." };
 }
