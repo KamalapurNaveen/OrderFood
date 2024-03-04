@@ -8,25 +8,15 @@ const { Text, Title } = Typography;
 
 const RecentOrders = () => {
   const [recentOrders, setRecentOrders] = useState([]);
+  const [stats,setStats]=useState([])
   const [itemImages, setItemImages] = useState({});
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(`${API_LINK}/api/_e/order/history`, { credentials: "include" });
+        const response = await fetch(`${API_LINK}/api/_e/order/history/stats`, { credentials: "include" });
         const resData = await response.json();
-        setRecentOrders(resData.data.orders);
-
-        // Fetch image URLs for each item
-        const images = {};
-        for (const order of resData.data.orders) {
-          for (const item of order.items) {
-            if (!images[item.item]) {
-              const imageUrl = await getImageForItem(item.item);
-              images[item.item] = imageUrl;
-            }
-          }
-        }
-        setItemImages(images);
+        setRecentOrders(resData.data.history);
+        setStats(resData.data.stats);
       } catch (error) {
         console.error("Error fetching items:", error);
       }
@@ -35,17 +25,7 @@ const RecentOrders = () => {
     fetchItems();
   }, []);
 
-  const getImageForItem = async (itemId) => {
-    try {
-      const response = await fetch(`${API_LINK}/api/_e/item/id?id=${itemId}`, { credentials: "include" });
-      const resData = await response.json();
-      return resData.data.image;
-    } catch (error) {
-      console.error("Error fetching image for item:", error);
-      return null;
-    }
-  };
-  // Calculate total revenue
+
   const totalRevenue = recentOrders.reduce((acc, order) => {
     const orderTotal = order.items.reduce((total, orderItem) => {
       return total + (orderItem.cost * orderItem.quantity);
@@ -58,20 +38,6 @@ const RecentOrders = () => {
     return acc + order.items.reduce((total, orderItem) => total + orderItem.quantity, 0);
   }, 0);
 
-  // Calculate individual item counts
-  const itemCounts = recentOrders.reduce((acc, order) => {
-    order.items.forEach(orderItem => {
-      const { item: itemId, name, cost, quantity } = orderItem;
-      const totalCost = cost * quantity;
-      if (acc[itemId]) {
-        acc[itemId].count += quantity;
-        acc[itemId].totalCost += totalCost;
-      } else {
-        acc[itemId] = { name, count: quantity, totalCost };
-      }
-    });
-    return acc;
-  }, {});
 
   return (
     <div style={{ padding: '20px' }}>
@@ -83,8 +49,8 @@ const RecentOrders = () => {
       <Divider />
       <Title level={3} style={{ marginBottom: '20px', color: '#4E4E4E' }}>Item Counts</Title>
       <Row gutter={[16, 16]}>
-        {Object.entries(itemCounts).map(([itemId, item]) => (
-          <Col key={itemId} xs={24} sm={12} md={8} lg={6} xl={4} style={{padding:"0px",margin:"0"}}> {/* Adjust column size based on your layout */}
+        {Object.entries(stats).map(([statId, stat]) => (
+          <Col key={statId} xs={24} sm={12} md={8} lg={6} xl={4} style={{padding:"0px",margin:"0"}}> {/* Adjust column size based on your layout */}
             <div style={{ position: 'relative', paddingBottom: '100%', marginBottom: '10px' }}> {/* Maintain aspect ratio for the card */}
               <Card
                 className='cardh'
@@ -103,17 +69,17 @@ const RecentOrders = () => {
               >
                 <div > 
                   <img
-                    src={itemImages[itemId]}
-                    alt={item.name}
+                    src={stat.image}
+                    alt={stat.name}
                     style={{ width: '100%', height: '100%' }} // Adjust border radius as needed
                   />
                 </div>
                 <div style={{display:"flex"}}>
                   <div>
-                  <p>{item.name}</p>
+                  <p>{stat.name}</p>
                   </div>
                   <div>
-                  <p style={{fontWeight:"700", paddingLeft:"20px"}}>{item.count}</p>
+                  <p style={{fontWeight:"700", paddingLeft:"20px"}}>{stat.quantity}</p>
                   </div>
                 </div>
                 

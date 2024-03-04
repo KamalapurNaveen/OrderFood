@@ -6,7 +6,7 @@ const DropdownItems = ({ items }) => {
   const menuItems = (
     <Menu>
       {items.map(item => (
-        <Menu.Item key={item.key}>
+        <Menu.Item key={item._id}>
           {`${item.name} - ${item.quantity}`}
         </Menu.Item>
       ))}

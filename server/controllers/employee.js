@@ -163,6 +163,14 @@ async function getQueueStats(req, res){
         res.status(500).send({success : false, message : err.message})
     }
 }
+async function getHistoryStats(req, res){
+    try {
+        const stats = await orderInteractor.getHistoryStats({OrderModel, ItemModel})
+        res.status(200).send({success : true, data : stats })
+    }catch(err){
+        res.status(500).send({success : false, message : err.message})
+    }
+}
 
 async function updatePassword(req, res){
     try{
@@ -222,6 +230,7 @@ module.exports = {
     getOrderHistory,
     getOrderQueue,
     getQueueStats,
+    getHistoryStats,
     updatePassword,
     employeeForgotPasswordSendOTP,
     employeeForgotPasswordVerifyOTP,
