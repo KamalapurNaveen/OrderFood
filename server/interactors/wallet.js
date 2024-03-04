@@ -11,8 +11,8 @@ async function createWallet({amountToAdd}){
     return wallet
 }
 
-async function addMoneyToWallet({wallet_id, amount, WalletModel, message}){
-    const wallet = await WalletModel.findById(wallet_id)
+async function addMoneyToWallet({walletId, amount, WalletModel, message}){
+    const wallet = await WalletModel.findById(walletId)
     const updatedAmount = Number(wallet.balance) + Number(amount);
     wallet.balance = updatedAmount;
     wallet.transactions.push({
@@ -25,12 +25,12 @@ async function addMoneyToWallet({wallet_id, amount, WalletModel, message}){
 
 async function rechargeWallet({wallet_id, amount, WalletModel}){
     const message =  `Recharged wallet with ₹${amount}`
-    await addMoneyToWallet({wallet_id, amount, WalletModel, message})
+    await addMoneyToWallet({walletId : wallet_id, amount, WalletModel, message})
 }
 
-async function creditWallet({wallet_id, amount, WalletModel}){
-    const message = `Refund for cancelled order ${order._id}`
-    await addMoneyToWallet({wallet_id, amount, WalletModel, message})
+async function creditWallet({walletId, amount, WalletModel, orderId}){
+    const message = `Refund for cancelled order ${orderId}`
+    await addMoneyToWallet({walletId, amount, WalletModel, message})
 }
 
 async function debitWallet({amount, walletId, WalletModel, createOrder}){
